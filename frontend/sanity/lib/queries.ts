@@ -1,6 +1,18 @@
 import {defineQuery} from 'next-sanity'
 
-export const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
+export const settingsQuery = defineQuery(`
+  *[_type == "settings"][0]{
+    ...,
+    footerButton {
+      ...,
+      link {
+        ...,
+        "page": page->slug.current,
+        "post": post->slug.current
+      }
+    }
+  }
+`)
 
 const postFields = /* groq */ `
   _id,
@@ -44,8 +56,40 @@ export const getPageQuery = defineQuery(`
           ${linkFields}
         }
       },
+      _type == "hero" => {
+        ...,
+        button {
+          ...,
+          ${linkFields}
+        }
+      },
       _type == "infoSection" => {
         content[]{
+          ...,
+          markDefs[]{
+            ...,
+            ${linkReference}
+          }
+        }
+      },
+      _type == "projectsSection" => {
+        ...,
+        projects[]->{
+          _id,
+          title,
+          description,
+          image
+        }
+      },
+      _type == "processSection" => {
+        ...,
+        steps[]{
+          ...,
+        }
+      },
+      _type == "introSection" => {
+        ...,
+        body[]{
           ...,
           markDefs[]{
             ...,

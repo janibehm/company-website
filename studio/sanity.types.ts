@@ -60,11 +60,76 @@ export type CallToAction = {
   contentAlignment?: 'textFirst' | 'imageFirst'
 }
 
+export type ProcessSection = {
+  _type: 'processSection'
+  steps?: Array<{
+    icon?: 'asterisk' | 'curlyBraces' | 'arrow' | 'diamond' | 'circle'
+    heading: string
+    items?: Array<string>
+    _type: 'processStep'
+    _key: string
+  }>
+}
+
+export type ProjectReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'project'
+}
+
+export type ProjectsSection = {
+  _type: 'projectsSection'
+  heading?: string
+  subheading?: string
+  projects?: Array<
+    {
+      _key: string
+    } & ProjectReference
+  >
+}
+
+export type IntroSection = {
+  _type: 'introSection'
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  heading: string
+  body?: BlockContentTextOnly
+}
+
 export type InfoSection = {
   _type: 'infoSection'
   heading?: string
   subheading?: string
   content?: BlockContent
+}
+
+export type SanityFileAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+}
+
+export type Hero = {
+  _type: 'hero'
+  eyebrow?: string
+  heading: string
+  subheading?: string
+  body?: BlockContentTextOnly
+  button?: Button
+  video?: {
+    asset?: SanityFileAssetReference
+    media?: unknown
+    _type: 'file'
+  }
+  videoLoop?: boolean
 }
 
 export type BlockContentTextOnly = Array<{
@@ -125,6 +190,40 @@ export type Button = {
   link?: Link
 }
 
+export type Project = {
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  description?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x: number
+  y: number
+  height: number
+  width: number
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -154,6 +253,8 @@ export type Settings = {
     _type: 'block'
     _key: string
   }>
+  footerHeading?: string
+  footerButton?: Button
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -163,22 +264,6 @@ export type Settings = {
     metadataBase?: string
     _type: 'image'
   }
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x: number
-  y: number
-  height: number
-  width: number
 }
 
 export type Page = {
@@ -194,10 +279,22 @@ export type Page = {
   pageBuilder?: Array<
     | ({
         _key: string
+      } & Hero)
+    | ({
+        _key: string
+      } & IntroSection)
+    | ({
+        _key: string
       } & CallToAction)
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & ProjectsSection)
+    | ({
+        _key: string
+      } & ProcessSection)
   >
 }
 
@@ -424,6 +521,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette
   lqip?: string
   blurHash?: string
+  thumbHash?: string
   hasAlpha?: boolean
   isOpaque?: boolean
 }
@@ -493,13 +591,20 @@ export type AllSanitySchemaTypes =
   | Link
   | SanityImageAssetReference
   | CallToAction
+  | ProcessSection
+  | ProjectReference
+  | ProjectsSection
+  | IntroSection
   | InfoSection
+  | SanityFileAssetReference
+  | Hero
   | BlockContentTextOnly
   | BlockContent
   | Button
-  | Settings
+  | Project
   | SanityImageCrop
   | SanityImageHotspot
+  | Settings
   | Page
   | PersonReference
   | Post

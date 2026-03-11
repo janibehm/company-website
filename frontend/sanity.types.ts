@@ -60,11 +60,76 @@ export type CallToAction = {
   contentAlignment?: 'textFirst' | 'imageFirst'
 }
 
+export type ProcessSection = {
+  _type: 'processSection'
+  steps?: Array<{
+    icon?: 'asterisk' | 'curlyBraces' | 'arrow' | 'diamond' | 'circle'
+    heading: string
+    items?: Array<string>
+    _type: 'processStep'
+    _key: string
+  }>
+}
+
+export type ProjectReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'project'
+}
+
+export type ProjectsSection = {
+  _type: 'projectsSection'
+  heading?: string
+  subheading?: string
+  projects?: Array<
+    {
+      _key: string
+    } & ProjectReference
+  >
+}
+
+export type IntroSection = {
+  _type: 'introSection'
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  heading: string
+  body?: BlockContentTextOnly
+}
+
 export type InfoSection = {
   _type: 'infoSection'
   heading?: string
   subheading?: string
   content?: BlockContent
+}
+
+export type SanityFileAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+}
+
+export type Hero = {
+  _type: 'hero'
+  eyebrow?: string
+  heading: string
+  subheading?: string
+  body?: BlockContentTextOnly
+  button?: Button
+  video?: {
+    asset?: SanityFileAssetReference
+    media?: unknown
+    _type: 'file'
+  }
+  videoLoop?: boolean
 }
 
 export type BlockContentTextOnly = Array<{
@@ -125,6 +190,40 @@ export type Button = {
   link?: Link
 }
 
+export type Project = {
+  _id: string
+  _type: 'project'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  description?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x: number
+  y: number
+  height: number
+  width: number
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -154,6 +253,8 @@ export type Settings = {
     _type: 'block'
     _key: string
   }>
+  footerHeading?: string
+  footerButton?: Button
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -163,22 +264,6 @@ export type Settings = {
     metadataBase?: string
     _type: 'image'
   }
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x: number
-  y: number
-  height: number
-  width: number
 }
 
 export type Page = {
@@ -194,10 +279,22 @@ export type Page = {
   pageBuilder?: Array<
     | ({
         _key: string
+      } & Hero)
+    | ({
+        _key: string
+      } & IntroSection)
+    | ({
+        _key: string
       } & CallToAction)
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & ProjectsSection)
+    | ({
+        _key: string
+      } & ProcessSection)
   >
 }
 
@@ -424,6 +521,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette
   lqip?: string
   blurHash?: string
+  thumbHash?: string
   hasAlpha?: boolean
   isOpaque?: boolean
 }
@@ -493,13 +591,20 @@ export type AllSanitySchemaTypes =
   | Link
   | SanityImageAssetReference
   | CallToAction
+  | ProcessSection
+  | ProjectReference
+  | ProjectsSection
+  | IntroSection
   | InfoSection
+  | SanityFileAssetReference
+  | Hero
   | BlockContentTextOnly
   | BlockContent
   | Button
-  | Settings
+  | Project
   | SanityImageCrop
   | SanityImageHotspot
+  | Settings
   | Page
   | PersonReference
   | Post
@@ -531,7 +636,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]
+// Query: *[_type == "settings"][0]{    ...,    footerButton {      ...,      link {        ...,        "page": page->slug.current,        "post": post->slug.current      }    }  }
 export type SettingsQueryResult = {
   _id: string
   _type: 'settings'
@@ -561,6 +666,19 @@ export type SettingsQueryResult = {
     _type: 'block'
     _key: string
   }>
+  footerHeading?: string
+  footerButton: {
+    _type: 'button'
+    buttonText?: string
+    link: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  } | null
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -574,7 +692,7 @@ export type SettingsQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "hero" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },      _type == "projectsSection" => {        ...,        projects[]->{          _id,          title,          description,          image        }      },      _type == "processSection" => {        ...,        steps[]{          ...,        }      },      _type == "introSection" => {        ...,        body[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
@@ -610,6 +728,32 @@ export type GetPageQueryResult = {
         }
         theme?: 'dark' | 'light'
         contentAlignment?: 'imageFirst' | 'textFirst'
+      }
+    | {
+        _key: string
+        _type: 'hero'
+        eyebrow?: string
+        heading: string
+        subheading?: string
+        body?: BlockContentTextOnly
+        button: {
+          _type: 'button'
+          buttonText?: string
+          link: {
+            _type: 'link'
+            linkType?: 'href' | 'page' | 'post'
+            href?: string
+            page: string | null
+            post: string | null
+            openInNewTab?: boolean
+          } | null
+        } | null
+        video?: {
+          asset?: SanityFileAssetReference
+          media?: unknown
+          _type: 'file'
+        }
+        videoLoop?: boolean
       }
     | {
         _key: string
@@ -649,6 +793,69 @@ export type GetPageQueryResult = {
               markDefs: null
             }
         > | null
+      }
+    | {
+        _key: string
+        _type: 'introSection'
+        image?: {
+          asset?: SanityImageAssetReference
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        }
+        heading: string
+        body: Array<{
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs: Array<{
+            href?: string
+            _type: 'link'
+            _key: string
+            page: null
+            post: null
+          }> | null
+          level?: number
+          _type: 'block'
+          _key: string
+        }> | null
+      }
+    | {
+        _key: string
+        _type: 'processSection'
+        steps: Array<{
+          icon?: 'arrow' | 'asterisk' | 'circle' | 'curlyBraces' | 'diamond'
+          heading: string
+          items?: Array<string>
+          _type: 'processStep'
+          _key: string
+        }> | null
+      }
+    | {
+        _key: string
+        _type: 'projectsSection'
+        heading?: string
+        subheading?: string
+        projects: Array<{
+          _id: string
+          title: string
+          description: string | null
+          image: {
+            asset?: SanityImageAssetReference
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+          } | null
+        }> | null
       }
   > | null
 } | null
@@ -816,8 +1023,8 @@ export type PagesSlugsResult = Array<{
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "settings"][0]': SettingsQueryResult
-    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[_type == "settings"][0]{\n    ...,\n    footerButton {\n      ...,\n      link {\n        ...,\n        "page": page->slug.current,\n        "post": post->slug.current\n      }\n    }\n  }\n': SettingsQueryResult
+    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "hero" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n      _type == "projectsSection" => {\n        ...,\n        projects[]->{\n          _id,\n          title,\n          description,\n          image\n        }\n      },\n      _type == "processSection" => {\n        ...,\n        steps[]{\n          ...,\n        }\n      },\n      _type == "introSection" => {\n        ...,\n        body[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult

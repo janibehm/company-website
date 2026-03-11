@@ -1,0 +1,125 @@
+import {PortableTextBlock} from 'next-sanity'
+
+import ResolvedLink from '@/app/components/ResolvedLink'
+import PortableText from '@/app/components/PortableText'
+import {projectId, dataset} from '@/sanity/lib/api'
+import {ExtractPageBuilderType} from '@/sanity/lib/types'
+
+type HeroProps = {
+  block: ExtractPageBuilderType<'hero'>
+  index: number
+  pageType: string
+  pageId: string
+}
+
+export default function Hero({block}: HeroProps) {
+  const {heading, eyebrow, subheading, body = [], button, video, videoLoop} = block
+
+  const videoUrl = video?.asset?._ref
+    ? `https://cdn.sanity.io/files/${projectId}/${dataset}/${video.asset._ref.replace('file-', '').replace(/-([^-]+)$/, '.$1')}`
+    : null
+
+  return (
+    <section className="relative overflow-hidden h-[calc(100vh+6rem)] -mt-24">
+      {videoUrl && (
+        <video
+          src={videoUrl}
+          autoPlay
+          muted
+          loop={videoLoop === true}
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+
+      {/* Video layout */}
+      {videoUrl && (
+        <>
+          <div className="relative">
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="flex flex-col h-screen pt-24">
+              <div className="px-8 sm:px-12 lg:px-16 pt-6 sm:pt-10 relative">
+                {eyebrow && (
+                  <p className="text-[10px] uppercase tracking-[0.25em] font-semibold mb-3 text-white/60">
+                    {eyebrow}
+                  </p>
+                )}
+                {heading && (
+                  <h1 className="text-[clamp(3.5rem,12.5vw,14rem)] font-bold leading-[0.92] tracking-tight uppercase text-white -ml-1">
+                    {heading}
+                  </h1>
+                )}
+                <div className="flex flex-col md:flex-row flex-1 mt-8 sm:mt-12 pb-10 gap-10 md:gap-0">
+                  <div className="md:w-[35%] flex flex-col gap-5">
+                    {subheading && (
+                      <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px] text-white/80">
+                        {subheading}
+                      </p>
+                    )}
+                    {body && (body as PortableTextBlock[]).length > 0 && (
+                      <div className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px] text-white/80 [&_p]:mb-0">
+                        <PortableText value={body as PortableTextBlock[]} />
+                      </div>
+                    )}
+                    {button?.buttonText && button?.link && (
+                      <ResolvedLink
+                        link={button.link}
+                        className="self-start rounded-full flex gap-2 font-mono text-sm whitespace-nowrap items-center py-3 px-6 transition-colors duration-200 bg-white text-black hover:bg-blue hover:text-white"
+                      >
+                        {button.buttonText}
+                      </ResolvedLink>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Editorial layout (no video) */}
+      {!videoUrl && (
+        <div className="flex flex-col h-screen pt-24">
+          {/* Giant heading — bleeds to container edges */}
+          <div className="px-8 sm:px-12 lg:px-16 pt-6 sm:pt-10">
+            {eyebrow && (
+              <p className="text-[10px] uppercase tracking-[0.25em] font-semibold mb-3 text-black/40">
+                {eyebrow}
+              </p>
+            )}
+            <h1 className="text-[clamp(3.5rem,12.5vw,14rem)] font-bold leading-[0.92] tracking-tight uppercase -ml-1">
+              {heading}
+            </h1>
+          </div>
+
+          {/* Body + image row */}
+          <div className="flex flex-col md:flex-row flex-1 mt-8 sm:mt-12 px-8 sm:px-12 lg:px-16 pb-10 gap-10 md:gap-0">
+            {/* Left: body / subheading / button + scroll */}
+            <div className="md:w-[35%] flex flex-col justify-between gap-6">
+              <div className="flex flex-col gap-5">
+                {subheading && (
+                  <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px]">
+                    {subheading}
+                  </p>
+                )}
+                {body && (body as PortableTextBlock[]).length > 0 && (
+                  <div className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px] [&_p]:mb-0">
+                    <PortableText value={body as PortableTextBlock[]} />
+                  </div>
+                )}
+                {button?.buttonText && button?.link && (
+                  <ResolvedLink
+                    link={button.link}
+                    className="self-start rounded-full flex gap-2 font-mono text-sm whitespace-nowrap items-center py-3 px-6 transition-colors duration-200 bg-black hover:bg-blue focus:bg-blue text-white"
+                  >
+                    {button.buttonText}
+                  </ResolvedLink>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  )
+}

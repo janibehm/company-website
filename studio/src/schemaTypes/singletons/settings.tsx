@@ -116,6 +116,19 @@ export const settings = defineType({
       ],
     }),
     defineField({
+      name: 'footerHeading',
+      title: 'Footer Heading',
+      type: 'string',
+      description: "Large heading displayed in the middle of the footer (e.g. \"Let's work together\")",
+    }),
+    defineField({
+      name: 'footerButton',
+      title: 'Footer Button',
+      type: 'button',
+      description: 'Call-to-action button displayed next to the footer heading',
+      options: {collapsible: true},
+    }),
+    defineField({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',

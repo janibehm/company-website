@@ -8,7 +8,7 @@ export default async function Header() {
   })
 
   return (
-    <header className="fixed z-50 h-24 inset-0 bg-white/80 flex items-center backdrop-blur-lg">
+    <header className="fixed z-50 h-24 inset-0 bg-transparent flex items-center text-white">
       <div className="container py-6 px-2 sm:px-6">
         <div className="flex items-center justify-between gap-5">
           <Link className="flex items-center gap-2" href="/">
@@ -28,7 +28,7 @@ export default async function Header() {
                 </Link>
               </li>
 
-              <li className="sm:before:w-[1px] sm:before:bg-gray-200 before:block flex sm:gap-4 md:gap-6">
+              <li className="sm:before:w-[1px] sm:before:bg-white/40 before:block flex sm:gap-4 md:gap-6">
                 <Link
                   className="rounded-full flex gap-4 items-center bg-black hover:bg-blue focus:bg-blue py-2 px-4 justify-center sm:py-3 sm:px-6 text-white transition-colors duration-200"
                   href="https://github.com/sanity-io/sanity-template-nextjs-clean"
