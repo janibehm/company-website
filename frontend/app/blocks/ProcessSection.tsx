@@ -73,12 +73,11 @@ export default function ProcessSection({block}: ProcessSectionProps) {
   return (
     <BlockWrapper className="py-0 md:py-0 border-y border-black/10 dark:border-white/10">
       <BlockContainer className="py-12">
-        <div
-          className="grid gap-10"
-          style={{gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))`}}
-        >
+        <div className="flex flex-col md:flex-row gap-10">
           {steps.map((step) => (
-            <StepColumn key={step._key} step={step} />
+            <div key={step._key} className="flex-1">
+              <StepColumn step={step} />
+            </div>
           ))}
         </div>
       </BlockContainer>
