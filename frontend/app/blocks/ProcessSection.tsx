@@ -41,16 +41,16 @@ function StepColumn({step}: {step: Step}) {
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
         {step.icon && icons[step.icon] && (
-          <span className="shrink-0">{icons[step.icon]}</span>
+          <span className="shrink-0 dark:text-white">{icons[step.icon]}</span>
         )}
         {step.heading && (
-          <h3 className="text-base font-bold uppercase tracking-wider">{step.heading}</h3>
+          <h3 className="text-base font-bold uppercase tracking-wider dark:text-white">{step.heading}</h3>
         )}
       </div>
       {step.items && step.items.length > 0 && (
         <ul className="flex flex-col gap-1.5">
           {step.items.map((item, i) => (
-            <li key={i} className="text-sm text-black/70 leading-snug">{item}</li>
+            <li key={i} className="text-sm text-black/70 dark:text-white/70 leading-snug">{item}</li>
           ))}
         </ul>
       )}
@@ -70,7 +70,7 @@ export default function ProcessSection({block}: ProcessSectionProps) {
   if (!steps || steps.length === 0) return null
 
   return (
-    <div className="border-y border-black/10">
+    <div className="border-y border-black/10 dark:border-white/10">
       <div className="container py-12">
         <div
           className="grid gap-10"

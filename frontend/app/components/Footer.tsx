@@ -21,7 +21,7 @@ export default async function Footer() {
   const footerButton = settings?.footerButton
 
   return (
-    <footer className="border-t border-black/10">
+    <footer className="border-t border-black/10 dark:border-white/10 dark:bg-gray-950">
       <style>{`
         @keyframes gradientBorder {
           0%   { background-position: 0% 50%; }
@@ -49,8 +49,13 @@ export default async function Footer() {
           color: black;
           white-space: nowrap;
         }
+        :global(.dark) .footer-btn-inner {
+          background: #13141b;
+          color: white;
+        }
         .footer-btn-inner:hover {
           background: transparent;
+          color: white;
         }
       `}</style>
       <div className="container">
@@ -81,7 +86,7 @@ export default async function Footer() {
               </span>
             )}
             {footerHeading && (
-              <div className="text-[clamp(2.5rem,9vw,8rem)] font-bold leading-[1.05] tracking-tighter uppercase text-center">
+              <div className="text-[clamp(2.5rem,9vw,8rem)] font-bold leading-[1.05] tracking-tighter uppercase text-center dark:text-white">
                 {footerHeading}
               </div>
             )}
@@ -96,7 +101,7 @@ export default async function Footer() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="text-xs uppercase tracking-widest font-semibold hover:opacity-50 transition-opacity"
+                    className="text-xs uppercase tracking-widest font-semibold hover:opacity-50 transition-opacity dark:text-white"
                   >
                     {label}
                   </Link>
@@ -111,7 +116,7 @@ export default async function Footer() {
                   <a
                     href={href}
                     {...(external ? {target: '_blank', rel: 'noopener noreferrer'} : {})}
-                    className="text-xs uppercase tracking-widest font-semibold hover:opacity-50 transition-opacity"
+                    className="text-xs uppercase tracking-widest font-semibold hover:opacity-50 transition-opacity dark:text-white"
                   >
                     {label}
                   </a>
@@ -122,7 +127,7 @@ export default async function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row justify-between gap-2 border-t border-black/10 py-6 text-[10px] uppercase tracking-widest text-black/50">
+        <div className="flex flex-col sm:flex-row justify-between gap-2 border-t border-black/10 dark:border-white/10 py-6 text-[10px] uppercase tracking-widest text-black/50 dark:text-white/50">
           <span>
             &copy;Company. All rights reserved &bull;{' '}
             <Link href="/privacy" className="hover:opacity-70 transition-opacity">

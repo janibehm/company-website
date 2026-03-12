@@ -29,17 +29,17 @@ export default function MobileNav() {
         className="relative z-[1000] flex flex-col justify-center gap-1.5 w-10 h-10 p-2 md:hidden"
       >
         <span
-          className={`block h-0.5 w-full rounded-full bg-white transition-all duration-300 origin-center ${
+          className={`block h-0.5 w-full rounded-full bg-white dark:bg-white transition-all duration-300 origin-center ${
             open ? 'translate-y-2 rotate-45' : ''
           }`}
         />
         <span
-          className={`block h-0.5 w-full rounded-full bg-white transition-opacity duration-300 ${
+          className={`block h-0.5 w-full rounded-full bg-white dark:bg-white transition-opacity duration-300 ${
             open ? 'opacity-0' : 'opacity-100'
           }`}
         />
         <span
-          className={`block h-0.5 w-full rounded-full bg-white transition-all duration-300 origin-center ${
+          className={`block h-0.5 w-full rounded-full bg-white dark:bg-white transition-all duration-300 origin-center ${
             open ? '-translate-y-2 -rotate-45' : ''
           }`}
         />

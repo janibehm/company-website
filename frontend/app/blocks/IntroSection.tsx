@@ -51,12 +51,12 @@ export default function IntroSection({block}: IntroSectionProps) {
           {/* Text column */}
           <div className="flex flex-col gap-6">
             {heading && (
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight dark:text-white">
                 {heading}
               </h2>
             )}
             {body && (body as PortableTextBlock[]).length > 0 && (
-              <div className="text-lg leading-relaxed text-gray-700 max-w-xl">
+              <div className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 max-w-xl">
                 <PortableText value={body as PortableTextBlock[]} />
               </div>
             )}

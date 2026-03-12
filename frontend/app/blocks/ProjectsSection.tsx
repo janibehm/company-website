@@ -38,8 +38,8 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
     <div className="container my-12">
       {(heading || subheading) && (
         <div className="mb-6">
-          {heading && <h2 className="text-2xl md:text-3xl lg:text-4xl">{heading}</h2>}
-          {subheading && <p className="text-lg text-gray-600 mt-1">{subheading}</p>}
+          {heading && <h2 className="text-2xl md:text-3xl lg:text-4xl dark:text-white">{heading}</h2>}
+          {subheading && <p className="text-lg text-gray-600 dark:text-gray-400 mt-1">{subheading}</p>}
         </div>
       )}
 
@@ -52,6 +52,10 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
           overflow: hidden;
           box-shadow: 0 30px 50px #dbdbdb;
           background: #f5f5f5;
+        }
+        :global(.dark) .ps-wrap {
+          box-shadow: 0 30px 50px rgba(0,0,0,0.5);
+          background: #1a1a1a;
         }
         .ps-slide {
           position: absolute;
@@ -140,6 +144,11 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
           cursor: pointer;
           transition: all 0.3s;
           font-size: 14px;
+        }
+        :global(.dark) .ps-buttons button {
+          border-color: rgba(255,255,255,0.5);
+          background: rgba(0,0,0,0.5);
+          color: white;
         }
         .ps-buttons button:hover {
           border-color: rgba(255,255,255,0.74);
