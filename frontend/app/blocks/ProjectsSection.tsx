@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 import SanityImage from '@/app/components/SanityImage'
 import {ExtractPageBuilderType} from '@/sanity/lib/types'
 import {BlockWrapper, BlockContainer} from './BlockLayout'
@@ -20,6 +20,8 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
   const {heading, subheading, projects: initialProjects} = block
   const [items, setItems] = useState<Project[]>(() => initialProjects ?? [])
   const [contentKey, setContentKey] = useState(0)
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
 
   if (!items.length) return null
 
@@ -33,6 +35,38 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
   const prev = () => {
     setItems(prev => { const a = [...prev]; a.unshift(a.pop()!); return a })
     setContentKey(k => k + 1)
+  }
+
+  const goToIndex = (index: number) => {
+    // index 0 and 1 are the current/background items, 2+ are the stacked cards
+    // Always just move one card forward when clicking any stacked card
+    if (index <= 1) return
+    next()
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    const diff = touchStartX.current - touchEndX.current
+    const minSwipeDistance = 50
+
+    if (Math.abs(diff) > minSwipeDistance) {
+      if (diff > 0) {
+        next()
+      } else {
+        prev()
+      }
+    }
+
+    touchStartX.current = null
+    touchEndX.current = null
   }
 
   return (
@@ -127,13 +161,18 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
           to   { opacity: 1; transform: none; filter: blur(0); }
         }
         .ps-buttons {
-          display: flex;
+          display: none;
           gap: 12px;
           position: absolute;
           bottom: 20px;
           left: 50%;
           transform: translateX(-50%);
           z-index: 10;
+        }
+        @media (min-width: 768px) {
+          .ps-buttons {
+            display: flex;
+          }
         }
         .ps-buttons button {
           width: 40px;
@@ -159,10 +198,20 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
         }
       `}</style>
 
-      <div className="ps-wrap">
+      <div 
+        className="ps-wrap"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="ps-slide">
-          {items.map((project) => (
-            <div key={project._id} className="ps-item">
+          {items.map((project, index) => (
+            <div 
+              key={project._id} 
+              className="ps-item"
+              onClick={() => goToIndex(index)}
+              style={{ cursor: index > 1 ? 'pointer' : 'default' }}
+            >
               {project.image?.asset && (
                 <SanityImage
                   id={project.image.asset._ref}
