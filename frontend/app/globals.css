@@ -3,6 +3,9 @@
 @plugin "@tailwindcss/typography";
 
 @layer base {
+  html, body {
+    overflow-x: hidden;
+  }
   h1,
   h2,
   h3,
@@ -14,6 +17,7 @@
 }
 
 @utility container {
+  width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
 }

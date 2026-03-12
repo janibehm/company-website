@@ -21,6 +21,18 @@ export default function Hero({block}: HeroProps) {
 
   return (
     <section className="relative overflow-hidden h-[calc(100vh+6rem)] -mt-24">
+      {/* Asterisk decoration — bottom right of hero */}
+      <svg
+        viewBox="0 0 100 100"
+        fill="none"
+        aria-hidden="true"
+        style={{position:'absolute', top:'60%', left:'60%', transform:'translate(-50%,-50%)', width:'28vw', maxWidth:320, opacity:0.18, zIndex:10, pointerEvents:'none', color:'white'}}
+      >
+        <line x1="50" y1="2" x2="50" y2="98" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/>
+        <line x1="2" y1="50" x2="98" y2="50" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/>
+        <line x1="10.5" y1="10.5" x2="89.5" y2="89.5" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/>
+        <line x1="89.5" y1="10.5" x2="10.5" y2="89.5" stroke="currentColor" strokeWidth="7" strokeLinecap="round"/>
+      </svg>
       {videoUrl && (
         <video
           src={videoUrl}
@@ -79,7 +91,7 @@ export default function Hero({block}: HeroProps) {
 
       {/* Editorial layout (no video) */}
       {!videoUrl && (
-        <div className="flex flex-col h-screen pt-24">
+        <div className="flex flex-col h-screen pt-24 relative">
           {/* Giant heading — bleeds to container edges */}
           <div className="px-8 sm:px-12 lg:px-16 pt-6 sm:pt-10">
             {eyebrow && (
@@ -117,6 +129,8 @@ export default function Hero({block}: HeroProps) {
                 )}
               </div>
             </div>
+            {/* Right: empty space */}
+            <div className="flex-1" />
           </div>
         </div>
       )}

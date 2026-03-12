@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import {settingsQuery} from '@/sanity/lib/queries'
 import {sanityFetch} from '@/sanity/lib/live'
+import MobileNav from '@/app/components/MobileNav'
 
 export default async function Header() {
   const {data: settings} = await sanityFetch({
@@ -8,7 +9,7 @@ export default async function Header() {
   })
 
   return (
-    <header className="fixed z-50 h-24 inset-0 bg-transparent flex items-center text-white">
+    <header className="fixed z-[999] h-24 inset-x-0 top-0 bg-transparent flex items-center text-white">
       <div className="container py-6 px-2 sm:px-6">
         <div className="flex items-center justify-between gap-5">
           <Link className="flex items-center gap-2" href="/">
@@ -17,7 +18,8 @@ export default async function Header() {
             </span>
           </Link>
 
-          <nav>
+          {/* Desktop nav */}
+          <nav className="hidden md:block">
             <ul
               role="list"
               className="flex items-center gap-4 md:gap-6 leading-5 text-xs sm:text-base tracking-tight font-mono"
@@ -48,6 +50,9 @@ export default async function Header() {
               </li>
             </ul>
           </nav>
+
+          {/* Mobile nav */}
+          <MobileNav />
         </div>
       </div>
     </header>
