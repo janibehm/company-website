@@ -2,6 +2,7 @@ import {type PortableTextBlock} from 'next-sanity'
 
 import PortableText from '@/app/components/PortableText'
 import SanityImage from '@/app/components/SanityImage'
+import {BlockWrapper, BlockContainer} from './BlockLayout'
 
 type IntroSectionImage = {
   _type: 'image'
@@ -30,8 +31,8 @@ export default function IntroSection({block}: IntroSectionProps) {
   const {image, heading, body} = block
 
   return (
-    <section className="py-16 md:py-24">
-      <div className="container mx-auto px-8 sm:px-12 lg:px-16">
+    <BlockWrapper className="pt-16 md:pt-48">
+      <BlockContainer>
         <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 md:gap-16 lg:gap-24 items-center">
           {/* Image column */}
           {image?.asset?._ref && (
@@ -62,7 +63,7 @@ export default function IntroSection({block}: IntroSectionProps) {
             )}
           </div>
         </div>
-      </div>
-    </section>
+      </BlockContainer>
+    </BlockWrapper>
   )
 }

@@ -5,6 +5,7 @@ import PortableText from '@/app/components/PortableText'
 import Image from '@/app/components/SanityImage'
 import {stegaClean} from '@sanity/client/stega'
 import {ExtractPageBuilderType} from '@/sanity/lib/types'
+import {BlockContainer} from './BlockLayout'
 
 type CtaProps = {
   block: ExtractPageBuilderType<'callToAction'>
@@ -21,9 +22,9 @@ export default function CTA({block}: CtaProps) {
   const isImageFirst = stegaClean(contentAlignment) === 'imageFirst'
 
   return (
-    <section className={isDark ? 'relative dark dark:bg-black' : 'relative dark:bg-black'}>
+    <section className={`py-16 md:py-24 ${isDark ? 'relative dark dark:bg-black' : 'relative dark:bg-black'}`}>
       <div className="absolute inset-0 bg-size-[5px] bg-[url(/images/tile-1-black.png)] dark:bg-[url(/images/tile-1-white.png)] opacity-25" />
-      <div className="container relative">
+      <BlockContainer className="relative">
         <div className="grid lg:grid-cols-2 gap-12 py-12">
           <div
             className={`${isImageFirst && image ? 'row-start-2 lg:row-start-1 lg:col-start-2' : ''} flex flex-col gap-2 `}
@@ -65,7 +66,7 @@ export default function CTA({block}: CtaProps) {
             />
           )}
         </div>
-      </div>
+      </BlockContainer>
     </section>
   )
 }

@@ -1,4 +1,5 @@
 import {ExtractPageBuilderType} from '@/sanity/lib/types'
+import {BlockWrapper, BlockContainer} from './BlockLayout'
 
 type ProcessSectionBlock = ExtractPageBuilderType<'processSection'>
 type Step = NonNullable<ProcessSectionBlock['steps']>[number]
@@ -70,8 +71,8 @@ export default function ProcessSection({block}: ProcessSectionProps) {
   if (!steps || steps.length === 0) return null
 
   return (
-    <div className="border-y border-black/10 dark:border-white/10">
-      <div className="container py-12">
+    <BlockWrapper className="py-0 md:py-0 border-y border-black/10 dark:border-white/10">
+      <BlockContainer className="py-12">
         <div
           className="grid gap-10"
           style={{gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))`}}
@@ -80,7 +81,7 @@ export default function ProcessSection({block}: ProcessSectionProps) {
             <StepColumn key={step._key} step={step} />
           ))}
         </div>
-      </div>
-    </div>
+      </BlockContainer>
+    </BlockWrapper>
   )
 }

@@ -21,7 +21,7 @@ export default async function Footer() {
   const footerButton = settings?.footerButton
 
   return (
-    <footer className="border-t border-black/10 dark:border-white/10 dark:bg-gray-950">
+    <footer className="dark:bg-black">
       <style>{`
         @keyframes gradientBorder {
           0%   { background-position: 0% 50%; }
