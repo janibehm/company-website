@@ -1,6 +1,7 @@
 'use client'
 
 import {useState, useRef} from 'react'
+import Link from 'next/link'
 import SanityImage from '@/app/components/SanityImage'
 import {ExtractPageBuilderType} from '@/sanity/lib/types'
 import {BlockWrapper, BlockContainer} from './BlockLayout'
@@ -153,8 +154,32 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
           margin: 10px 0 0;
           font-size: clamp(0.7rem, 1.5vw, 0.95rem);
           line-height: 1.5;
+          max-width: 380px;
           opacity: 0;
           animation: psAnimate 1s ease-in-out 0.3s forwards;
+        }
+        .ps-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 16px;
+          font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          font-weight: 600;
+          color: #fff;
+          opacity: 0;
+          animation: psAnimate 1s ease-in-out 0.5s forwards;
+          transition: opacity 0.2s;
+        }
+        .ps-link svg {
+          transition: transform 0.3s ease;
+        }
+        .ps-link:hover {
+          opacity: 0.7;
+        }
+        .ps-link:hover svg {
+          transform: translateX(4px);
         }
         @keyframes psAnimate {
           from { opacity: 0; transform: translateY(50px); filter: blur(16px); }
@@ -221,6 +246,19 @@ export default function ProjectsSection({block}: ProjectsSectionProps) {
               <div key={contentKey} className="ps-content">
                 {project.title && <div className="ps-name">{project.title}</div>}
                 {project.description && <div className="ps-des">{project.description}</div>}
+                {project.linkText && (
+                  <Link 
+                    href={project.link?.linkType === 'href' ? (project.link.href || '#') : `/${project.link?.page || project.link?.post || ''}`}
+                    className="ps-link"
+                    target={project.link?.linkType === 'href' ? '_blank' : undefined}
+                    rel={project.link?.linkType === 'href' ? 'noopener noreferrer' : undefined}
+                  >
+                    {project.linkText}
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                )}
               </div>
             </div>
           ))}

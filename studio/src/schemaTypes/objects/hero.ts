@@ -82,7 +82,17 @@ export const hero = defineType({
       title: 'Decoration Image',
       type: 'image',
       group: 'media',
-      description: 'Optional decorative image (e.g., asterisk or logo) displayed over the hero.',
+      description: 'Optional decorative image displayed over the hero.',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'decorationImageHover',
+      title: 'Decoration Image (Hover)',
+      type: 'image',
+      group: 'media',
+      description: 'Image shown when hovering over the decoration.',
       options: {
         hotspot: true,
       },

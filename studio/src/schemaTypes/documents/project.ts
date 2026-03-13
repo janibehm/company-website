@@ -31,6 +31,17 @@ export const project = defineType({
         }),
       ],
     }),
+    defineField({
+      name: 'linkText',
+      title: 'Link Text',
+      type: 'string',
+      description: 'Text to display for the project link (e.g., "View Project")',
+    }),
+    defineField({
+      name: 'link',
+      title: 'Link',
+      type: 'link',
+    }),
   ],
   preview: {
     select: {

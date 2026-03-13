@@ -60,6 +60,18 @@ export type CallToAction = {
   contentAlignment?: 'textFirst' | 'imageFirst'
 }
 
+export type ServicesSection = {
+  _type: 'servicesSection'
+  heading?: string
+  linkText?: string
+  services?: Array<{
+    title: string
+    items?: Array<string>
+    _type: 'serviceCard'
+    _key: string
+  }>
+}
+
 export type ProcessSection = {
   _type: 'processSection'
   steps?: Array<{
@@ -130,6 +142,20 @@ export type Hero = {
     _type: 'file'
   }
   videoLoop?: boolean
+  decorationImage?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  decorationImageHover?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
 }
 
 export type BlockContentTextOnly = Array<{
@@ -206,6 +232,8 @@ export type Project = {
     alt?: string
     _type: 'image'
   }
+  linkText?: string
+  link?: Link
 }
 
 export type SanityImageCrop = {
@@ -295,6 +323,9 @@ export type Page = {
     | ({
         _key: string
       } & ProcessSection)
+    | ({
+        _key: string
+      } & ServicesSection)
   >
 }
 
@@ -591,6 +622,7 @@ export type AllSanitySchemaTypes =
   | Link
   | SanityImageAssetReference
   | CallToAction
+  | ServicesSection
   | ProcessSection
   | ProjectReference
   | ProjectsSection

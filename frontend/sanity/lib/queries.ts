@@ -78,7 +78,13 @@ export const getPageQuery = defineQuery(`
           _id,
           title,
           description,
-          image
+          image,
+          linkText,
+          link {
+            ...,
+            "page": page->slug.current,
+            "post": post->slug.current
+          }
         }
       },
       _type == "processSection" => {

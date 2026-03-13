@@ -14,6 +14,11 @@ type HeroProps = {
         _ref: string
       }
     }
+    decorationImageHover?: {
+      asset?: {
+        _ref: string
+      }
+    }
   }
   index: number
   pageType: string
@@ -21,7 +26,7 @@ type HeroProps = {
 }
 
 export default function Hero({block}: HeroProps) {
-  const {heading, eyebrow, subheading, body = [], button, video, videoLoop, decorationImage} = block
+  const {heading, eyebrow, subheading, body = [], button, video, videoLoop, decorationImage, decorationImageHover} = block
 
   const videoUrl = video?.asset?._ref
     ? `https://cdn.sanity.io/files/${projectId}/${dataset}/${video.asset._ref.replace('file-', '').replace(/-([^-]+)$/, '.$1')}`
@@ -32,16 +37,25 @@ export default function Hero({block}: HeroProps) {
       {/* Decoration image — bottom right of hero */}
       {decorationImage?.asset?._ref && (
         <div
-          className="absolute w-[50vw] md:w-[28vw] max-w-[320px]"
-          style={{top:'60%', left:'60%', transform:'translate(-50%,-50%)', zIndex:10, pointerEvents:'none'}}
+          className="absolute w-[50vw] md:w-[28vw] max-w-[320px] group cursor-pointer"
+          style={{top:'60%', left:'60%', transform:'translate(-50%,-50%)', zIndex:10, pointerEvents:'auto'}}
         >
           <SanityImage
             id={decorationImage.asset._ref}
             alt=""
             width={320}
             height={320}
-            className="w-full h-auto"
+            className={`w-full h-auto transition-opacity duration-300 ${decorationImageHover?.asset?._ref ? 'group-hover:opacity-0' : ''}`}
           />
+          {decorationImageHover?.asset?._ref && (
+            <SanityImage
+              id={decorationImageHover.asset._ref}
+              alt=""
+              width={320}
+              height={320}
+              className="w-full h-auto absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+          )}
         </div>
       )}
       {videoUrl && (
