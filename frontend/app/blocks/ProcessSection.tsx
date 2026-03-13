@@ -49,7 +49,7 @@ function StepColumn({step}: {step: Step}) {
         )}
       </div>
       {step.items && step.items.length > 0 && (
-        <ul className="flex flex-col gap-1.5">
+        <ul className="flex flex-col gap-1.5 max-w-xs">
           {step.items.map((item, i) => (
             <li key={i} className="text-sm text-black/70 dark:text-white/70 leading-snug">{item}</li>
           ))}

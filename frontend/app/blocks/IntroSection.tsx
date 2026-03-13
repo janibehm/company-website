@@ -31,7 +31,7 @@ export default function IntroSection({block}: IntroSectionProps) {
   const {image, heading, body} = block
 
   return (
-    <BlockWrapper className="pt-16 md:pt-48">
+    <BlockWrapper>
       <BlockContainer>
         <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 md:gap-16 lg:gap-24 items-center">
           {/* Image column */}

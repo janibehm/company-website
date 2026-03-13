@@ -3,6 +3,7 @@ import {sanityFetch} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
 import ResolvedLink from '@/app/components/ResolvedLink'
 import type {DereferencedLink} from '@/sanity/lib/types'
+import {BlockContainer} from '@/app/blocks/BlockLayout'
 
 const navLinks = [
   {label: 'Work', href: '/work'},
@@ -41,8 +42,8 @@ export default async function Footer() {
           background: white;
           border-radius: 9999px;
           transition: background 0.3s;
-          padding: 2rem 5rem;
-          font-size: 1.5rem;
+          padding: 3rem 8rem;
+          font-size: 2.5rem;
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.15em;
@@ -58,32 +59,21 @@ export default async function Footer() {
           color: white;
         }
       `}</style>
-      <div className="container">
+      <BlockContainer>
         {/* Big heading + CTA */}
         {(footerHeading || footerButton?.buttonText) && (
           <div className="py-16 sm:py-24 flex flex-col items-center gap-10">
             {footerButton?.buttonText && footerButton?.link && (
-              <span className="footer-btn-wrap">
-                <ResolvedLink
-                  link={footerButton.link as DereferencedLink}
-                  className="footer-btn-inner"
-                  style={{
-                    display: 'block',
-                    padding: '2rem 5rem',
-                    fontSize: '1.5rem',
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.15em',
-                    color: 'black',
-                    whiteSpace: 'nowrap',
-                    borderRadius: '9999px',
-                    background: 'white',
-                    transition: 'background 0.3s',
-                  }}
-                >
-                  {footerButton.buttonText}
-                </ResolvedLink>
-              </span>
+              <ResolvedLink
+                link={footerButton.link as DereferencedLink}
+                className="inline-block"
+              >
+                <span className="footer-btn-wrap">
+                  <div className="py-10 px-16 text-3xl font-semibold uppercase tracking-widest text-black dark:text-white whitespace-nowrap rounded-full bg-white dark:bg-gray-950 transition-colors hover:bg-transparent hover:text-white">
+                    {footerButton.buttonText}
+                  </div>
+                </span>
+              </ResolvedLink>
             )}
             {footerHeading && (
               <div className="text-[clamp(2.5rem,9vw,8rem)] font-bold leading-[1.05] tracking-tighter uppercase text-center dark:text-white">
@@ -125,18 +115,7 @@ export default async function Footer() {
             </ul>
           </nav>
         </div>
-
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row justify-between gap-2 border-t border-black/10 dark:border-white/10 py-6 text-[10px] uppercase tracking-widest text-black/50 dark:text-white/50">
-          <span>
-            &copy;Company. All rights reserved &bull;{' '}
-            <Link href="/privacy" className="hover:opacity-70 transition-opacity">
-              Privacy
-            </Link>
-          </span>
-          <span>Website by Your Agency</span>
-        </div>
-      </div>
+      </BlockContainer>
     </footer>
   )
 }

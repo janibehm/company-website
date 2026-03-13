@@ -6,6 +6,7 @@ import Info from '@/app/blocks/InfoSection'
 import IntroSection from '@/app/blocks/IntroSection'
 import ProjectsSection from '@/app/blocks/ProjectsSection'
 import ProcessSection from '@/app/blocks/ProcessSection'
+import ServicesSection from '@/app/blocks/ServicesSection'
 import {dataAttr} from '@/sanity/lib/utils'
 import {PageBuilderSection} from '@/sanity/lib/types'
 
@@ -27,6 +28,7 @@ const Blocks = {
   introSection: IntroSection,
   projectsSection: ProjectsSection,
   processSection: ProcessSection,
+  servicesSection: ServicesSection,
 } as BlocksType
 
 /**

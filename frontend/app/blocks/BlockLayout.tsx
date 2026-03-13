@@ -27,8 +27,7 @@ type BlockContainerProps = {
 
 export function BlockContainer({children, className = ''}: BlockContainerProps) {
   return (
-    <div className={`w-full max-w-[1440px] mx-auto px-10 sm:px-16 lg:px-24 xl:px-10 2xl:px-8 overflow-hidden ${className}`}>
-      {children}
+    <div className={`w-full max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 ${className}`}>      {children}
     </div>
   )
 }

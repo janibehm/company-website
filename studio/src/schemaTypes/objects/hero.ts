@@ -77,6 +77,16 @@ export const hero = defineType({
       description: 'Whether the video should loop continuously.',
       initialValue: false,
     }),
+    defineField({
+      name: 'decorationImage',
+      title: 'Decoration Image',
+      type: 'image',
+      group: 'media',
+      description: 'Optional decorative image (e.g., asterisk or logo) displayed over the hero.',
+      options: {
+        hotspot: true,
+      },
+    }),
   ],
   preview: {
     select: {
