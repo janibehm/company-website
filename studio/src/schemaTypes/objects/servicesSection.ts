@@ -40,6 +40,18 @@ export const servicesSection = defineType({
               type: 'array',
               of: [{type: 'string'}],
             }),
+            defineField({
+              name: 'linkText',
+              title: 'Link Text',
+              type: 'string',
+              description: 'Text for the read more link (e.g., "Read more")',
+            }),
+            defineField({
+              name: 'link',
+              title: 'Link',
+              type: 'link',
+              description: 'Where the read more link should point to',
+            }),
           ],
           preview: {
             select: {

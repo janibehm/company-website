@@ -87,6 +87,13 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
+      _type == "servicesSection" => {
+        ...,
+        services[]{
+          ...,
+          ${linkFields}
+        }
+      },
       _type == "processSection" => {
         ...,
         steps[]{

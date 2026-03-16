@@ -77,7 +77,18 @@ export default async function Footer() {
             )}
             {footerHeading && (
               <div className="text-[clamp(2.5rem,9vw,8rem)] font-bold leading-[1.05] tracking-tighter uppercase text-center dark:text-white">
-                {footerHeading}
+                {(() => {
+                  const words = footerHeading.split(' ')
+                  const mid = Math.ceil(words.length / 2)
+                  const firstLine = words.slice(0, mid).join(' ')
+                  const secondLine = words.slice(mid).join(' ')
+                  return (
+                    <>
+                      <span className="block">{firstLine}</span>
+                      {secondLine && <span className="block">{secondLine}</span>}
+                    </>
+                  )
+                })()}
               </div>
             )}
           </div>
