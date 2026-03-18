@@ -86,14 +86,14 @@ export default function Hero({block}: HeroProps) {
                   </h1>
                 )}
                 <div className="flex flex-col md:flex-row flex-1 mt-8 sm:mt-12 pb-8 md:pb-24 gap-10 md:gap-0">
-                  <div className="md:w-[35%] flex flex-col gap-5">
+                  <div className="md:w-[45%] flex flex-col gap-5">
                     {subheading && (
-                      <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px] text-white/80">
+                      <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-sm text-white/80">
                         {subheading}
                       </p>
                     )}
                     {body && (body as PortableTextBlock[]).length > 0 && (
-                      <div className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px] text-white/80 [&_p]:mb-0">
+                      <div className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-sm text-white/80 [&_p]:mb-0">
                         <PortableText value={body as PortableTextBlock[]} />
                       </div>
                     )}
@@ -130,15 +130,15 @@ export default function Hero({block}: HeroProps) {
           {/* Body + image row */}
               <BlockContainer className="relative">
             {/* Left: body / subheading / button + scroll */}
-            <div className="md:w-[35%] flex flex-col justify-between gap-6">
+            <div className="md:w-[45%] flex flex-col justify-between gap-6">
               <div className="flex flex-col gap-5">
                 {subheading && (
-                  <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px] dark:text-white/80">
+                  <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-sm dark:text-white/80">
                     {subheading}
                   </p>
                 )}
                 {body && (body as PortableTextBlock[]).length > 0 && (
-                  <div className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-[220px] [&_p]:mb-0 dark:text-white/80">
+                  <div className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-sm [&_p]:mb-0 dark:text-white/80">
                     <PortableText value={body as PortableTextBlock[]} />
                   </div>
                 )}
