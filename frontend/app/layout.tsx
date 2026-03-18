@@ -85,7 +85,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           }}
         />
       </head>
-      <body className="bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
+      <body className="bg-white dark:bg-black text-black dark:text-white">
         <ThemeProvider>
         {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
         <Toaster />

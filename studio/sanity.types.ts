@@ -67,6 +67,8 @@ export type ServicesSection = {
   services?: Array<{
     title: string
     items?: Array<string>
+    linkText?: string
+    link?: Link
     _type: 'serviceCard'
     _key: string
   }>

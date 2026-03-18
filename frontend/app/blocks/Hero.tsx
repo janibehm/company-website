@@ -33,7 +33,7 @@ export default function Hero({block}: HeroProps) {
     : null
 
   return (
-    <section className="relative overflow-hidden h-[calc(100vh+6rem)] -mt-24">
+    <section className={`relative overflow-hidden h-[calc(100vh+6rem)] -mt-24 ${videoUrl ? 'bg-black' : 'bg-white dark:bg-black'}`}>
       {/* Decoration image — bottom right of hero */}
       {decorationImage?.asset?._ref && (
         <div
