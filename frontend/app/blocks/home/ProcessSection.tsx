@@ -1,5 +1,5 @@
 import {ExtractPageBuilderType} from '@/sanity/lib/types'
-import {BlockWrapper, BlockContainer} from './BlockLayout'
+import {BlockWrapper, BlockContainer} from '../BlockLayout'
 
 type ProcessSectionBlock = ExtractPageBuilderType<'processSection'>
 type Step = NonNullable<ProcessSectionBlock['steps']>[number]

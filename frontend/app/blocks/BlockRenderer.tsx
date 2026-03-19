@@ -1,12 +1,12 @@
 import React from 'react'
 
 import Cta from '@/app/blocks/Cta'
-import Hero from '@/app/blocks/Hero'
-import Info from '@/app/blocks/InfoSection'
-import IntroSection from '@/app/blocks/IntroSection'
-import ProjectsSection from '@/app/blocks/ProjectsSection'
-import ProcessSection from '@/app/blocks/ProcessSection'
-import ServicesSection from '@/app/blocks/ServicesSection'
+import Hero from '@/app/blocks/home/Hero'
+import Info from '@/app/blocks/home/InfoSection'
+import IntroSection from '@/app/blocks/home/IntroSection'
+import ProjectsSection from '@/app/blocks/home/ProjectsSection'
+import ProcessSection from '@/app/blocks/home/ProcessSection'
+import ServicesSection from '@/app/blocks/home/ServicesSection'
 import {dataAttr} from '@/sanity/lib/utils'
 import {PageBuilderSection} from '@/sanity/lib/types'
 

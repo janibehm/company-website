@@ -2,7 +2,7 @@ import {type PortableTextBlock} from 'next-sanity'
 
 import PortableText from '@/app/components/PortableText'
 import {InfoSection} from '@/sanity.types'
-import {BlockWrapper, BlockContainer} from './BlockLayout'
+import {BlockWrapper, BlockContainer} from '../BlockLayout'
 
 type InfoProps = {
   block: InfoSection

@@ -5,7 +5,7 @@ import PortableText from '@/app/components/PortableText'
 import SanityImage from '@/app/components/SanityImage'
 import {projectId, dataset} from '@/sanity/lib/api'
 import {ExtractPageBuilderType} from '@/sanity/lib/types'
-import {BlockContainer} from './BlockLayout'
+import {BlockContainer} from '../BlockLayout'
 
 type HeroProps = {
   block: ExtractPageBuilderType<'hero'> & {

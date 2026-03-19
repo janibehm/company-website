@@ -13,6 +13,11 @@ export const servicesSection = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'subheading',
+      title: 'Subheading',
+      type: 'string',
+    }),
+    defineField({
       name: 'linkText',
       title: 'Link Text',
       type: 'string',

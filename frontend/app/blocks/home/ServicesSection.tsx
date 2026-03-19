@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import {BlockWrapper, BlockContainer} from './BlockLayout'
-import SanityImage from '../components/SanityImage'
+import {BlockWrapper, BlockContainer} from '../BlockLayout'
+import SanityImage from '../../components/SanityImage'
 
 type ServiceCard = {
   _key: string
@@ -19,6 +19,7 @@ type ServicesBlock = {
   _type: 'servicesSection'
   _key: string
   heading?: string
+  subheading?: string
   linkText?: string
   services?: ServiceCard[]
 }
@@ -31,16 +32,22 @@ type ServicesSectionProps = {
 }
 
 export default function ServicesSection({block}: ServicesSectionProps) {
-  const {heading, linkText, services} = block
+  const {heading, subheading, linkText, services} = block
 
   return (
     <BlockWrapper>
       <BlockContainer>
         {heading && (
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-12 md:mb-16 dark:text-white">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold dark:text-white">
             {heading}
           </h2>
         )}
+        {subheading && (
+          <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-md mt-4 mb-12 md:mb-16 text-gray-600 dark:text-white/80">
+            {subheading}
+          </p>
+        )}
+        {!subheading && heading && <div className="mb-12 md:mb-16" />}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {services?.map((service) => (

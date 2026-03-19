@@ -2,7 +2,7 @@ import {type PortableTextBlock} from 'next-sanity'
 
 import PortableText from '@/app/components/PortableText'
 import SanityImage from '@/app/components/SanityImage'
-import {BlockWrapper, BlockContainer} from './BlockLayout'
+import {BlockWrapper, BlockContainer} from '../BlockLayout'
 
 type IntroSectionImage = {
   _type: 'image'

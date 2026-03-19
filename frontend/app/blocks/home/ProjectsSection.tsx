@@ -4,7 +4,7 @@ import {useState, useRef} from 'react'
 import Link from 'next/link'
 import SanityImage from '@/app/components/SanityImage'
 import {ExtractPageBuilderType} from '@/sanity/lib/types'
-import {BlockWrapper, BlockContainer} from './BlockLayout'
+import {BlockWrapper, BlockContainer} from '../BlockLayout'
 
 type ProjectsSectionBlock = ExtractPageBuilderType<'projectsSection'>
 
