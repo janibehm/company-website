@@ -79,7 +79,7 @@ export default function ServicesSection({block}: ServicesSectionProps) {
         </div>
 
         {linkText && (
-        <div className="mt-12 md:mt-16 text-center">
+        <div className="mt-12 md:mt-16">
           <Link
             href="/services"
             className="group inline-flex items-center gap-2 text-sm uppercase tracking-widest font-semibold transition-opacity hover:opacity-70 dark:text-white"
