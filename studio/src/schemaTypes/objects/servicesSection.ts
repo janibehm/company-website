@@ -35,10 +35,36 @@ export const servicesSection = defineType({
               validation: (Rule) => Rule.required(),
             }),
             defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 3,
+            }),
+            defineField({
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: {hotspot: true},
+              fields: [
+                defineField({
+                  name: 'alt',
+                  title: 'Alt text',
+                  type: 'string',
+                }),
+              ],
+            }),
+            defineField({
+              name: 'backgroundColor',
+              title: 'Background Color',
+              type: 'string',
+              description: 'CSS color for the image card background (e.g., #ec4899, #3b82f6)',
+            }),
+            defineField({
               name: 'items',
               title: 'List Items',
               type: 'array',
               of: [{type: 'string'}],
+              hidden: true,
             }),
             defineField({
               name: 'linkText',
@@ -57,11 +83,13 @@ export const servicesSection = defineType({
             select: {
               title: 'title',
               items: 'items',
+              media: 'image',
             },
-            prepare({title, items}) {
+            prepare({title, items, media}) {
               return {
                 title: title || 'Untitled Service',
                 subtitle: items ? `${items.length} items` : 'No items',
+                media,
               }
             },
           },

@@ -91,6 +91,14 @@ export const getPageQuery = defineQuery(`
         ...,
         services[]{
           ...,
+          image{
+            ...,
+            asset->{
+              _id,
+              url,
+              metadata { dimensions }
+            }
+          },
           ${linkFields}
         }
       },

@@ -33,7 +33,7 @@ export default function IntroSection({block}: IntroSectionProps) {
   return (
     <>
       {/* Organic wave divider */}
-      <div className="w-full pointer-events-none -mt-[5vw]">
+      <div className="w-full pointer-events-none">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/hero_wave.svg"
