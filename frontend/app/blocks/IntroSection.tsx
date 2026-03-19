@@ -31,8 +31,18 @@ export default function IntroSection({block}: IntroSectionProps) {
   const {image, heading, body} = block
 
   return (
-    <BlockWrapper>
-      <BlockContainer>
+    <>
+      {/* Organic wave divider */}
+      <div className="w-full pointer-events-none -mt-[5vw]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/hero_wave.svg"
+          alt=""
+          className="block w-full h-auto"
+        />
+      </div>
+      <BlockWrapper>
+        <BlockContainer>
         <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 md:gap-16 lg:gap-24 items-center">
           {/* Image column */}
           {image?.asset?._ref && (
@@ -65,5 +75,6 @@ export default function IntroSection({block}: IntroSectionProps) {
         </div>
       </BlockContainer>
     </BlockWrapper>
+    </>
   )
 }

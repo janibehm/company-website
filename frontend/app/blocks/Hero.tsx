@@ -157,6 +157,7 @@ export default function Hero({block}: HeroProps) {
           </BlockContainer>
         </div>
       )}
+
     </section>
   )
 }

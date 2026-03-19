@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import {headers} from 'next/headers'
 import {sanityFetch} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
 import ResolvedLink from '@/app/components/ResolvedLink'
@@ -20,6 +21,9 @@ export default async function Footer() {
   const {data: settings} = await sanityFetch({query: settingsQuery})
   const footerHeading = settings?.footerHeading
   const footerButton = settings?.footerButton
+  const headerList = await headers()
+  const pathname = headerList.get('x-pathname') || ''
+  const isContactPage = pathname === '/contact'
 
   return (
     <footer className="dark:bg-black">
@@ -61,7 +65,7 @@ export default async function Footer() {
       `}</style>
       <BlockContainer>
         {/* Big heading + CTA */}
-        {(footerHeading || footerButton?.buttonText) && (
+        {!isContactPage && (footerHeading || footerButton?.buttonText) && (
           <div className="py-16 sm:py-24 flex flex-col items-center gap-10">
             {footerButton?.buttonText && footerButton?.link && (
               <ResolvedLink
