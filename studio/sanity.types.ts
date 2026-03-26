@@ -13,6 +13,22 @@
  */
 
 // Source: ../sanity.schema.json
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
+export type ServiceCardImage = {
+  asset?: SanityImageAssetReference
+  media?: unknown // Unable to locate the referenced type "serviceCard.image.media" in schema
+  hotspot?: SanityImageHotspot
+  crop?: SanityImageCrop
+  alt?: string
+  _type: 'image'
+}
+
 export type PageReference = {
   _ref: string
   _type: 'reference'
@@ -36,13 +52,6 @@ export type Link = {
   openInNewTab?: boolean
 }
 
-export type SanityImageAssetReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-}
-
 export type CallToAction = {
   _type: 'callToAction'
   eyebrow?: string
@@ -63,9 +72,13 @@ export type CallToAction = {
 export type ServicesSection = {
   _type: 'servicesSection'
   heading?: string
+  subheading?: string
   linkText?: string
   services?: Array<{
     title: string
+    description?: string
+    image?: ServiceCardImage
+    backgroundColor?: string
     items?: Array<string>
     linkText?: string
     link?: Link
@@ -619,10 +632,11 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | SanityImageAssetReference
+  | ServiceCardImage
   | PageReference
   | PostReference
   | Link
-  | SanityImageAssetReference
   | CallToAction
   | ServicesSection
   | ProcessSection

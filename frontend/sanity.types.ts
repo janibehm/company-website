@@ -13,6 +13,22 @@
  */
 
 // Source: ../sanity.schema.json
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
+export type ServiceCardImage = {
+  asset?: SanityImageAssetReference
+  media?: unknown // Unable to locate the referenced type "serviceCard.image.media" in schema
+  hotspot?: SanityImageHotspot
+  crop?: SanityImageCrop
+  alt?: string
+  _type: 'image'
+}
+
 export type PageReference = {
   _ref: string
   _type: 'reference'
@@ -36,13 +52,6 @@ export type Link = {
   openInNewTab?: boolean
 }
 
-export type SanityImageAssetReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-}
-
 export type CallToAction = {
   _type: 'callToAction'
   eyebrow?: string
@@ -63,10 +72,16 @@ export type CallToAction = {
 export type ServicesSection = {
   _type: 'servicesSection'
   heading?: string
+  subheading?: string
   linkText?: string
   services?: Array<{
     title: string
+    description?: string
+    image?: ServiceCardImage
+    backgroundColor?: string
     items?: Array<string>
+    linkText?: string
+    link?: Link
     _type: 'serviceCard'
     _key: string
   }>
@@ -617,10 +632,11 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | SanityImageAssetReference
+  | ServiceCardImage
   | PageReference
   | PostReference
   | Link
-  | SanityImageAssetReference
   | CallToAction
   | ServicesSection
   | ProcessSection
@@ -724,7 +740,7 @@ export type SettingsQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "hero" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },      _type == "projectsSection" => {        ...,        projects[]->{          _id,          title,          description,          image,          linkText,          link {            ...,            "page": page->slug.current,            "post": post->slug.current          }        }      },      _type == "processSection" => {        ...,        steps[]{          ...,        }      },      _type == "introSection" => {        ...,        body[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "hero" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },      _type == "projectsSection" => {        ...,        projects[]->{          _id,          title,          description,          image,          linkText,          link {            ...,            "page": page->slug.current,            "post": post->slug.current          }        }      },      _type == "servicesSection" => {        ...,        services[]{          ...,          image{            ...,            asset->{              _id,              url,              metadata { dimensions }            }          },            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "processSection" => {        ...,        steps[]{          ...,        }      },      _type == "introSection" => {        ...,        body[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
@@ -916,13 +932,39 @@ export type GetPageQueryResult = {
         _key: string
         _type: 'servicesSection'
         heading?: string
+        subheading?: string
         linkText?: string
-        services?: Array<{
+        services: Array<{
           title: string
+          description?: string
+          image: {
+            asset: {
+              _id: string
+              url: string | null
+              metadata: {
+                dimensions: SanityImageDimensions | null
+              } | null
+            } | null
+            media?: unknown // Unable to locate the referenced type "serviceCard.image.media" in schema
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+          } | null
+          backgroundColor?: string
           items?: Array<string>
+          linkText?: string
+          link: {
+            _type: 'link'
+            linkType?: 'href' | 'page' | 'post'
+            href?: string
+            page: string | null
+            post: string | null
+            openInNewTab?: boolean
+          } | null
           _type: 'serviceCard'
           _key: string
-        }>
+        }> | null
       }
   > | null
 } | null
@@ -1091,7 +1133,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "settings"][0]{\n    ...,\n    footerButton {\n      ...,\n      link {\n        ...,\n        "page": page->slug.current,\n        "post": post->slug.current\n      }\n    }\n  }\n': SettingsQueryResult
-    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "hero" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n      _type == "projectsSection" => {\n        ...,\n        projects[]->{\n          _id,\n          title,\n          description,\n          image,\n          linkText,\n          link {\n            ...,\n            "page": page->slug.current,\n            "post": post->slug.current\n          }\n        }\n      },\n      _type == "processSection" => {\n        ...,\n        steps[]{\n          ...,\n        }\n      },\n      _type == "introSection" => {\n        ...,\n        body[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "hero" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n      _type == "projectsSection" => {\n        ...,\n        projects[]->{\n          _id,\n          title,\n          description,\n          image,\n          linkText,\n          link {\n            ...,\n            "page": page->slug.current,\n            "post": post->slug.current\n          }\n        }\n      },\n      _type == "servicesSection" => {\n        ...,\n        services[]{\n          ...,\n          image{\n            ...,\n            asset->{\n              _id,\n              url,\n              metadata { dimensions }\n            }\n          },\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "processSection" => {\n        ...,\n        steps[]{\n          ...,\n        }\n      },\n      _type == "introSection" => {\n        ...,\n        body[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult
