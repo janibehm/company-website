@@ -63,6 +63,39 @@ export const getPageQuery = defineQuery(`
           ${linkFields}
         }
       },
+      _type == "servicesHero" => {
+        ...,
+        image{
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata { dimensions }
+          }
+        }
+      },
+      _type == "designSection" => {
+        ...,
+        image{
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata { dimensions }
+          }
+        }
+      },
+      _type == "illustrationSection" => {
+        ...,
+        image{
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata { dimensions }
+          }
+        }
+      },
       _type == "infoSection" => {
         content[]{
           ...,
@@ -100,6 +133,17 @@ export const getPageQuery = defineQuery(`
             }
           },
           ${linkFields}
+        }
+      },
+      _type == "technologiesSection" => {
+        ...,
+        image{
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata { dimensions }
+          }
         }
       },
       _type == "processSection" => {

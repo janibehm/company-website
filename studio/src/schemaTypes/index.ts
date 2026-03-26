@@ -3,12 +3,16 @@ import {page} from './documents/page'
 import {post} from './documents/post'
 import {project} from './documents/project'
 import {callToAction} from './objects/callToAction'
+import {designSection} from './objects/designSection'
 import {hero} from './objects/hero'
 import {infoSection} from './objects/infoSection'
+import {illustrationSection} from './objects/illustrationSection'
 import {introSection} from './objects/introSection'
 import {projectsSection} from './objects/projectsSection'
 import {processSection} from './objects/processSection'
+import {servicesHero} from './objects/servicesHero'
 import {servicesSection} from './objects/servicesSection'
+import {technologiesSection} from './objects/technologiesSection'
 import {settings} from './singletons/settings'
 import {link} from './objects/link'
 import {blockContent} from './objects/blockContent'
@@ -29,12 +33,16 @@ export const schemaTypes = [
   button,
   blockContent,
   blockContentTextOnly,
+  designSection,
   hero,
   infoSection,
+  illustrationSection,
   introSection,
   projectsSection,
   processSection,
+  servicesHero,
   servicesSection,
+  technologiesSection,
   callToAction,
   link,
 ]

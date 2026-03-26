@@ -33,7 +33,6 @@ export const page = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'subheading',
@@ -44,7 +43,19 @@ export const page = defineType({
       name: 'pageBuilder',
       title: 'Page builder',
       type: 'array',
-      of: [{type: 'hero'}, {type: 'introSection'}, {type: 'callToAction'}, {type: 'infoSection'}, {type: 'projectsSection'}, {type: 'processSection'}, {type: 'servicesSection'}],
+      of: [
+        {type: 'hero'},
+        {type: 'servicesHero'},
+        {type: 'introSection'},
+        {type: 'designSection'},
+        {type: 'illustrationSection'},
+        {type: 'callToAction'},
+        {type: 'infoSection'},
+        {type: 'projectsSection'},
+        {type: 'processSection'},
+        {type: 'servicesSection'},
+        {type: 'technologiesSection'},
+      ],
       options: {
         insertMenu: {
           // Configure the "Add Item" menu to display a thumbnail preview of the content type. https://www.sanity.io/docs/studio/array-type#efb1fe03459d

@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol
+
 // Source: ../sanity.schema.json
 export type SanityImageAssetReference = {
   _ref: string
@@ -69,6 +71,15 @@ export type CallToAction = {
   contentAlignment?: 'textFirst' | 'imageFirst'
 }
 
+export type TechnologiesSection = {
+  _type: 'technologiesSection'
+  heading: string
+  subheading?: string
+  body?: string
+  tools?: Array<string>
+  integrations?: Array<string>
+}
+
 export type ServicesSection = {
   _type: 'servicesSection'
   heading?: string
@@ -85,6 +96,12 @@ export type ServicesSection = {
     _type: 'serviceCard'
     _key: string
   }>
+}
+
+export type ServicesHero = {
+  _type: 'servicesHero'
+  heading: string
+  body?: string
 }
 
 export type ProcessSection = {
@@ -130,6 +147,14 @@ export type IntroSection = {
   body?: BlockContentTextOnly
 }
 
+export type IllustrationSection = {
+  _type: 'illustrationSection'
+  heading: string
+  subheading?: string
+  body?: string
+  bullets?: Array<string>
+}
+
 export type InfoSection = {
   _type: 'infoSection'
   heading?: string
@@ -171,6 +196,13 @@ export type Hero = {
     crop?: SanityImageCrop
     _type: 'image'
   }
+}
+
+export type DesignSection = {
+  _type: 'designSection'
+  heading: string
+  subheading?: string
+  body?: string
 }
 
 export type BlockContentTextOnly = Array<{
@@ -325,7 +357,16 @@ export type Page = {
       } & Hero)
     | ({
         _key: string
+      } & ServicesHero)
+    | ({
+        _key: string
       } & IntroSection)
+    | ({
+        _key: string
+      } & DesignSection)
+    | ({
+        _key: string
+      } & IllustrationSection)
     | ({
         _key: string
       } & CallToAction)
@@ -341,6 +382,9 @@ export type Page = {
     | ({
         _key: string
       } & ServicesSection)
+    | ({
+        _key: string
+      } & TechnologiesSection)
   >
 }
 
@@ -583,14 +627,14 @@ export type SanityFileAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   source?: SanityAssetSourceData
 }
 
@@ -612,14 +656,14 @@ export type SanityImageAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   metadata?: SanityImageMetadata
   source?: SanityAssetSourceData
 }
@@ -638,14 +682,18 @@ export type AllSanitySchemaTypes =
   | PostReference
   | Link
   | CallToAction
+  | TechnologiesSection
   | ServicesSection
+  | ServicesHero
   | ProcessSection
   | ProjectReference
   | ProjectsSection
   | IntroSection
+  | IllustrationSection
   | InfoSection
   | SanityFileAssetReference
   | Hero
+  | DesignSection
   | BlockContentTextOnly
   | BlockContent
   | Button
@@ -679,5 +727,3 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint
-
-export declare const internalGroqTypeReferenceTo: unique symbol
