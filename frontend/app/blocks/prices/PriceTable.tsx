@@ -12,8 +12,8 @@ type LinkType = {
   _type: 'link'
   linkType?: 'href' | 'page' | 'post' | 'contact'
   href?: string
-  page?: {_id: string; slug?: {current?: string}}
-  post?: {_id: string; slug?: {current?: string}}
+  page?: string | null
+  post?: string | null
 }
 
 type CtaType = {
