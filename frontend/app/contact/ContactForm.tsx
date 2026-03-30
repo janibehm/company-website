@@ -21,6 +21,15 @@ export default function ContactForm() {
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
+      <input
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
+
       {state.message && !state.success && (
         <p className="text-sm text-red-500">{state.message}</p>
       )}

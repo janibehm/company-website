@@ -162,6 +162,50 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
+      _type == "aboutIntro" => {
+        ...,
+        image{
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata { dimensions }
+          }
+        }
+      },
+      _type == "aboutFaq" => {
+        ...,
+        items[]{
+          ...,
+          answer[]{
+            ...,
+            markDefs[]{
+              ...,
+              ${linkReference}
+            }
+          }
+        }
+      },
+      _type == "priceTable" => {
+        ...,
+        rows[]{
+          ...
+        }
+      },
+      _type == "teamSection" => {
+        ...,
+        members[]{
+          ...,
+          image{
+            ...,
+            asset->{
+              _id,
+              url,
+              metadata { dimensions }
+            }
+          }
+        }
+      },
     },
   }
 `)

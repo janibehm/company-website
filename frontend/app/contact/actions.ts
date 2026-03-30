@@ -16,6 +16,24 @@ export async function submitContactForm(
   _prevState: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  const formspreeEndpoint = process.env.FORMSPREE_ENDPOINT
+
+  if (!formspreeEndpoint) {
+    return {
+      success: false,
+      message: 'Contact form is not configured yet. Please try again later.',
+    }
+  }
+
+  const gotcha = formData.get('_gotcha')
+
+  if (typeof gotcha === 'string' && gotcha.trim().length > 0) {
+    return {
+      success: true,
+      message: 'Thanks for reaching out! We\'ll get back to you soon.',
+    }
+  }
+
   const raw = {
     name: formData.get('name'),
     email: formData.get('email'),
@@ -32,9 +50,21 @@ export async function submitContactForm(
     }
   }
 
-  // TODO: Send email or save to database
-  // e.g. await sendEmail(result.data)
-  console.log('Contact form submission:', result.data)
+  const response = await fetch(formspreeEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(result.data),
+  })
+
+  if (!response.ok) {
+    return {
+      success: false,
+      message: 'Something went wrong while sending your message. Please try again.',
+    }
+  }
 
   return {
     success: true,

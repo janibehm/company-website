@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol
+
 // Source: ../sanity.schema.json
 export type SanityImageAssetReference = {
   _ref: string
@@ -23,6 +25,15 @@ export type SanityImageAssetReference = {
 export type ServiceCardImage = {
   asset?: SanityImageAssetReference
   media?: unknown // Unable to locate the referenced type "serviceCard.image.media" in schema
+  hotspot?: SanityImageHotspot
+  crop?: SanityImageCrop
+  alt?: string
+  _type: 'image'
+}
+
+export type TeamMemberImage = {
+  asset?: SanityImageAssetReference
+  media?: unknown // Unable to locate the referenced type "teamMember.image.media" in schema
   hotspot?: SanityImageHotspot
   crop?: SanityImageCrop
   alt?: string
@@ -76,6 +87,40 @@ export type TechnologiesSection = {
   body?: string
   tools?: Array<string>
   integrations?: Array<string>
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type TeamSection = {
+  _type: 'teamSection'
+  heading?: string
+  members?: Array<{
+    name: string
+    role?: string
+    image?: TeamMemberImage
+    _type: 'teamMember'
+    _key: string
+  }>
+}
+
+export type PriceTable = {
+  _type: 'priceTable'
+  heading?: string
+  subheading?: string
+  rows?: Array<{
+    product: string
+    description?: string
+    price: string
+    _type: 'priceRow'
+    _key: string
+  }>
+  note?: string
 }
 
 export type ServicesSection = {
@@ -100,6 +145,14 @@ export type ServicesHero = {
   _type: 'servicesHero'
   heading: string
   body?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
 }
 
 export type ProcessSection = {
@@ -151,6 +204,14 @@ export type IllustrationSection = {
   subheading?: string
   body?: string
   bullets?: Array<string>
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
 }
 
 export type InfoSection = {
@@ -201,6 +262,39 @@ export type DesignSection = {
   heading: string
   subheading?: string
   body?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type AboutIntro = {
+  _type: 'aboutIntro'
+  heading?: string
+  body?: BlockContentTextOnly
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type AboutFaq = {
+  _type: 'aboutFaq'
+  heading?: string
+  items?: Array<{
+    question: string
+    answer?: BlockContentTextOnly
+    _type: 'faqItem'
+    _key: string
+  }>
 }
 
 export type BlockContentTextOnly = Array<{
@@ -347,7 +441,7 @@ export type Page = {
   _rev: string
   name: string
   slug: Slug
-  heading: string
+  heading?: string
   subheading?: string
   pageBuilder?: Array<
     | ({
@@ -383,6 +477,18 @@ export type Page = {
     | ({
         _key: string
       } & TechnologiesSection)
+    | ({
+        _key: string
+      } & AboutIntro)
+    | ({
+        _key: string
+      } & AboutFaq)
+    | ({
+        _key: string
+      } & TeamSection)
+    | ({
+        _key: string
+      } & PriceTable)
   >
 }
 
@@ -625,14 +731,14 @@ export type SanityFileAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   source?: SanityAssetSourceData
 }
 
@@ -654,14 +760,14 @@ export type SanityImageAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   metadata?: SanityImageMetadata
   source?: SanityAssetSourceData
 }
@@ -676,11 +782,14 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | ServiceCardImage
+  | TeamMemberImage
   | PageReference
   | PostReference
   | Link
   | CallToAction
   | TechnologiesSection
+  | TeamSection
+  | PriceTable
   | ServicesSection
   | ServicesHero
   | ProcessSection
@@ -692,6 +801,8 @@ export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | Hero
   | DesignSection
+  | AboutIntro
+  | AboutFaq
   | BlockContentTextOnly
   | BlockContent
   | Button
@@ -725,8 +836,6 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint
-
-export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -786,15 +895,65 @@ export type SettingsQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "hero" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "servicesHero" => {        ...      },      _type == "designSection" => {        ...      },      _type == "illustrationSection" => {        ...      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },      _type == "projectsSection" => {        ...,        projects[]->{          _id,          title,          description,          image,          linkText,          link {            ...,            "page": page->slug.current,            "post": post->slug.current          }        }      },      _type == "servicesSection" => {        ...,        services[]{          ...,          image{            ...,            asset->{              _id,              url,              metadata { dimensions }            }          },            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "technologiesSection" => {        ...      },      _type == "processSection" => {        ...,        steps[]{          ...,        }      },      _type == "introSection" => {        ...,        body[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "hero" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "servicesHero" => {        ...,        image{          ...,          asset->{            _id,            url,            metadata { dimensions }          }        }      },      _type == "designSection" => {        ...,        image{          ...,          asset->{            _id,            url,            metadata { dimensions }          }        }      },      _type == "illustrationSection" => {        ...,        image{          ...,          asset->{            _id,            url,            metadata { dimensions }          }        }      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },      _type == "projectsSection" => {        ...,        projects[]->{          _id,          title,          description,          image,          linkText,          link {            ...,            "page": page->slug.current,            "post": post->slug.current          }        }      },      _type == "servicesSection" => {        ...,        services[]{          ...,          image{            ...,            asset->{              _id,              url,              metadata { dimensions }            }          },            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "technologiesSection" => {        ...,        image{          ...,          asset->{            _id,            url,            metadata { dimensions }          }        }      },      _type == "processSection" => {        ...,        steps[]{          ...,        }      },      _type == "introSection" => {        ...,        body[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },      _type == "aboutIntro" => {        ...,        image{          ...,          asset->{            _id,            url,            metadata { dimensions }          }        }      },      _type == "aboutFaq" => {        ...,        items[]{          ...,          answer[]{            ...,            markDefs[]{              ...,                _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }            }          }        }      },      _type == "priceTable" => {        ...,        rows[]{          ...        }      },      _type == "teamSection" => {        ...,        members[]{          ...,          image{            ...,            asset->{              _id,              url,              metadata { dimensions }            }          }        }      },    },  }
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
   name: string
   slug: Slug
-  heading: string
+  heading: string | null
   subheading: string | null
   pageBuilder: Array<
+    | {
+        _key: string
+        _type: 'aboutFaq'
+        heading?: string
+        items: Array<{
+          question: string
+          answer: Array<{
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs: Array<{
+              href?: string
+              _type: 'link'
+              _key: string
+              page: null
+              post: null
+            }> | null
+            level?: number
+            _type: 'block'
+            _key: string
+          }> | null
+          _type: 'faqItem'
+          _key: string
+        }> | null
+      }
+    | {
+        _key: string
+        _type: 'aboutIntro'
+        heading?: string
+        body?: BlockContentTextOnly
+        image: {
+          asset: {
+            _id: string
+            url: string
+            metadata: {
+              dimensions: SanityImageDimensions | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        } | null
+      }
     | {
         _key: string
         _type: 'callToAction'
@@ -829,6 +988,20 @@ export type GetPageQueryResult = {
         heading: string
         subheading?: string
         body?: string
+        image: {
+          asset: {
+            _id: string
+            url: string
+            metadata: {
+              dimensions: SanityImageDimensions | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        } | null
       }
     | {
         _key: string
@@ -877,6 +1050,20 @@ export type GetPageQueryResult = {
         subheading?: string
         body?: string
         bullets?: Array<string>
+        image: {
+          asset: {
+            _id: string
+            url: string
+            metadata: {
+              dimensions: SanityImageDimensions | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        } | null
       }
     | {
         _key: string
@@ -952,6 +1139,20 @@ export type GetPageQueryResult = {
       }
     | {
         _key: string
+        _type: 'priceTable'
+        heading?: string
+        subheading?: string
+        rows: Array<{
+          product: string
+          description?: string
+          price: string
+          _type: 'priceRow'
+          _key: string
+        }> | null
+        note?: string
+      }
+    | {
+        _key: string
         _type: 'processSection'
         steps: Array<{
           icon?: 'arrow' | 'asterisk' | 'circle' | 'curlyBraces' | 'diamond'
@@ -994,6 +1195,20 @@ export type GetPageQueryResult = {
         _type: 'servicesHero'
         heading: string
         body?: string
+        image: {
+          asset: {
+            _id: string
+            url: string
+            metadata: {
+              dimensions: SanityImageDimensions | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        } | null
       }
     | {
         _key: string
@@ -1007,7 +1222,7 @@ export type GetPageQueryResult = {
           image: {
             asset: {
               _id: string
-              url: string | null
+              url: string
               metadata: {
                 dimensions: SanityImageDimensions | null
               } | null
@@ -1035,12 +1250,51 @@ export type GetPageQueryResult = {
       }
     | {
         _key: string
+        _type: 'teamSection'
+        heading?: string
+        members: Array<{
+          name: string
+          role?: string
+          image: {
+            asset: {
+              _id: string
+              url: string
+              metadata: {
+                dimensions: SanityImageDimensions | null
+              } | null
+            } | null
+            media?: unknown // Unable to locate the referenced type "teamMember.image.media" in schema
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+          } | null
+          _type: 'teamMember'
+          _key: string
+        }> | null
+      }
+    | {
+        _key: string
         _type: 'technologiesSection'
         heading: string
         subheading?: string
         body?: string
         tools?: Array<string>
         integrations?: Array<string>
+        image: {
+          asset: {
+            _id: string
+            url: string
+            metadata: {
+              dimensions: SanityImageDimensions | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        } | null
       }
   > | null
 } | null
@@ -1209,7 +1463,7 @@ import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "settings"][0]{\n    ...,\n    footerButton {\n      ...,\n      link {\n        ...,\n        "page": page->slug.current,\n        "post": post->slug.current\n      }\n    }\n  }\n': SettingsQueryResult
-    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "hero" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "servicesHero" => {\n        ...\n      },\n      _type == "designSection" => {\n        ...\n      },\n      _type == "illustrationSection" => {\n        ...\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n      _type == "projectsSection" => {\n        ...,\n        projects[]->{\n          _id,\n          title,\n          description,\n          image,\n          linkText,\n          link {\n            ...,\n            "page": page->slug.current,\n            "post": post->slug.current\n          }\n        }\n      },\n      _type == "servicesSection" => {\n        ...,\n        services[]{\n          ...,\n          image{\n            ...,\n            asset->{\n              _id,\n              url,\n              metadata { dimensions }\n            }\n          },\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "technologiesSection" => {\n        ...\n      },\n      _type == "processSection" => {\n        ...,\n        steps[]{\n          ...,\n        }\n      },\n      _type == "introSection" => {\n        ...,\n        body[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "hero" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "servicesHero" => {\n        ...,\n        image{\n          ...,\n          asset->{\n            _id,\n            url,\n            metadata { dimensions }\n          }\n        }\n      },\n      _type == "designSection" => {\n        ...,\n        image{\n          ...,\n          asset->{\n            _id,\n            url,\n            metadata { dimensions }\n          }\n        }\n      },\n      _type == "illustrationSection" => {\n        ...,\n        image{\n          ...,\n          asset->{\n            _id,\n            url,\n            metadata { dimensions }\n          }\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n      _type == "projectsSection" => {\n        ...,\n        projects[]->{\n          _id,\n          title,\n          description,\n          image,\n          linkText,\n          link {\n            ...,\n            "page": page->slug.current,\n            "post": post->slug.current\n          }\n        }\n      },\n      _type == "servicesSection" => {\n        ...,\n        services[]{\n          ...,\n          image{\n            ...,\n            asset->{\n              _id,\n              url,\n              metadata { dimensions }\n            }\n          },\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "technologiesSection" => {\n        ...,\n        image{\n          ...,\n          asset->{\n            _id,\n            url,\n            metadata { dimensions }\n          }\n        }\n      },\n      _type == "processSection" => {\n        ...,\n        steps[]{\n          ...,\n        }\n      },\n      _type == "introSection" => {\n        ...,\n        body[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n      _type == "aboutIntro" => {\n        ...,\n        image{\n          ...,\n          asset->{\n            _id,\n            url,\n            metadata { dimensions }\n          }\n        }\n      },\n      _type == "aboutFaq" => {\n        ...,\n        items[]{\n          ...,\n          answer[]{\n            ...,\n            markDefs[]{\n              ...,\n              \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n            }\n          }\n        }\n      },\n      _type == "priceTable" => {\n        ...,\n        rows[]{\n          ...\n        }\n      },\n      _type == "teamSection" => {\n        ...,\n        members[]{\n          ...,\n          image{\n            ...,\n            asset->{\n              _id,\n              url,\n              metadata { dimensions }\n            }\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult

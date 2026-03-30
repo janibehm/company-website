@@ -56,7 +56,6 @@ export default function ServicesSection({block}: ServicesSectionProps) {
               {(service.image?.asset?._id || service.image?.asset?._ref) && (
                 <div
                   className="rounded-2xl overflow-hidden aspect-[6/7] relative"
-                  style={{backgroundColor: service.backgroundColor || '#333'}}
                 >
                   <SanityImage
                     id={(service.image.asset._id || service.image.asset._ref)!}

@@ -1,12 +1,16 @@
 import React from 'react'
 
 import Cta from '@/app/blocks/Cta'
+import PriceTable from '@/app/blocks/prices/PriceTable'
 import Hero from '@/app/blocks/home/Hero'
 import Info from '@/app/blocks/home/InfoSection'
 import IntroSection from '@/app/blocks/home/IntroSection'
 import ProjectsSection from '@/app/blocks/home/ProjectsSection'
 import ProcessSection from '@/app/blocks/home/ProcessSection'
 import ServicesSection from '@/app/blocks/home/ServicesSection'
+import AboutFaq from '@/app/blocks/about/AboutFaq'
+import AboutIntro from '@/app/blocks/about/AboutIntro'
+import TeamSection from '@/app/blocks/about/TeamSection'
 import DesignSection from '@/app/blocks/services/DesignSection'
 import IllustrationSection from '@/app/blocks/services/IllustrationSection'
 import ServicesHero from '@/app/blocks/services/ServicesHero'
@@ -27,12 +31,16 @@ type BlocksType = {
 
 const Blocks = {
   callToAction: Cta,
+  priceTable: PriceTable,
   hero: Hero,
   infoSection: Info,
   introSection: IntroSection,
   projectsSection: ProjectsSection,
   processSection: ProcessSection,
   servicesSection: ServicesSection,
+  aboutFaq: AboutFaq,
+  aboutIntro: AboutIntro,
+  teamSection: TeamSection,
   servicesHero: ServicesHero,
   designSection: DesignSection,
   illustrationSection: IllustrationSection,

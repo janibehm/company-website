@@ -55,6 +55,10 @@ export const page = defineType({
         {type: 'processSection'},
         {type: 'servicesSection'},
         {type: 'technologiesSection'},
+        {type: 'aboutIntro'},
+        {type: 'aboutFaq'},
+        {type: 'teamSection'},
+        {type: 'priceTable'},
       ],
       options: {
         insertMenu: {

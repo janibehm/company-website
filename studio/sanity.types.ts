@@ -31,6 +31,15 @@ export type ServiceCardImage = {
   _type: 'image'
 }
 
+export type TeamMemberImage = {
+  asset?: SanityImageAssetReference
+  media?: unknown // Unable to locate the referenced type "teamMember.image.media" in schema
+  hotspot?: SanityImageHotspot
+  crop?: SanityImageCrop
+  alt?: string
+  _type: 'image'
+}
+
 export type PageReference = {
   _ref: string
   _type: 'reference'
@@ -78,6 +87,40 @@ export type TechnologiesSection = {
   body?: string
   tools?: Array<string>
   integrations?: Array<string>
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type TeamSection = {
+  _type: 'teamSection'
+  heading?: string
+  members?: Array<{
+    name: string
+    role?: string
+    image?: TeamMemberImage
+    _type: 'teamMember'
+    _key: string
+  }>
+}
+
+export type PriceTable = {
+  _type: 'priceTable'
+  heading?: string
+  subheading?: string
+  rows?: Array<{
+    product: string
+    description?: string
+    price: string
+    _type: 'priceRow'
+    _key: string
+  }>
+  note?: string
 }
 
 export type ServicesSection = {
@@ -102,6 +145,14 @@ export type ServicesHero = {
   _type: 'servicesHero'
   heading: string
   body?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
 }
 
 export type ProcessSection = {
@@ -153,6 +204,14 @@ export type IllustrationSection = {
   subheading?: string
   body?: string
   bullets?: Array<string>
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
 }
 
 export type InfoSection = {
@@ -203,6 +262,39 @@ export type DesignSection = {
   heading: string
   subheading?: string
   body?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type AboutIntro = {
+  _type: 'aboutIntro'
+  heading?: string
+  body?: BlockContentTextOnly
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type AboutFaq = {
+  _type: 'aboutFaq'
+  heading?: string
+  items?: Array<{
+    question: string
+    answer?: BlockContentTextOnly
+    _type: 'faqItem'
+    _key: string
+  }>
 }
 
 export type BlockContentTextOnly = Array<{
@@ -349,7 +441,7 @@ export type Page = {
   _rev: string
   name: string
   slug: Slug
-  heading: string
+  heading?: string
   subheading?: string
   pageBuilder?: Array<
     | ({
@@ -385,6 +477,18 @@ export type Page = {
     | ({
         _key: string
       } & TechnologiesSection)
+    | ({
+        _key: string
+      } & AboutIntro)
+    | ({
+        _key: string
+      } & AboutFaq)
+    | ({
+        _key: string
+      } & TeamSection)
+    | ({
+        _key: string
+      } & PriceTable)
   >
 }
 
@@ -678,11 +782,14 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | ServiceCardImage
+  | TeamMemberImage
   | PageReference
   | PostReference
   | Link
   | CallToAction
   | TechnologiesSection
+  | TeamSection
+  | PriceTable
   | ServicesSection
   | ServicesHero
   | ProcessSection
@@ -694,6 +801,8 @@ export type AllSanitySchemaTypes =
   | SanityFileAssetReference
   | Hero
   | DesignSection
+  | AboutIntro
+  | AboutFaq
   | BlockContentTextOnly
   | BlockContent
   | Button

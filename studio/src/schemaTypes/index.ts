@@ -2,6 +2,8 @@ import {person} from './documents/person'
 import {page} from './documents/page'
 import {post} from './documents/post'
 import {project} from './documents/project'
+import {aboutFaq} from './objects/aboutFaq'
+import {aboutIntro} from './objects/aboutIntro'
 import {callToAction} from './objects/callToAction'
 import {designSection} from './objects/designSection'
 import {hero} from './objects/hero'
@@ -12,6 +14,8 @@ import {projectsSection} from './objects/projectsSection'
 import {processSection} from './objects/processSection'
 import {servicesHero} from './objects/servicesHero'
 import {servicesSection} from './objects/servicesSection'
+import {priceTable} from './objects/priceTable'
+import {teamSection} from './objects/teamSection'
 import {technologiesSection} from './objects/technologiesSection'
 import {settings} from './singletons/settings'
 import {link} from './objects/link'
@@ -33,6 +37,8 @@ export const schemaTypes = [
   button,
   blockContent,
   blockContentTextOnly,
+  aboutFaq,
+  aboutIntro,
   designSection,
   hero,
   infoSection,
@@ -42,6 +48,8 @@ export const schemaTypes = [
   processSection,
   servicesHero,
   servicesSection,
+  priceTable,
+  teamSection,
   technologiesSection,
   callToAction,
   link,
