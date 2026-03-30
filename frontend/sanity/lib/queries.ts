@@ -188,6 +188,13 @@ export const getPageQuery = defineQuery(`
       },
       _type == "priceTable" => {
         ...,
+        cta {
+          ...,
+          link {
+            ...,
+            ${linkReference}
+          }
+        },
         rows[]{
           ...
         }

@@ -1,4 +1,5 @@
 import {BlockContainer, BlockWrapper} from '../BlockLayout'
+import ResolvedLink from '../../components/ResolvedLink'
 
 type PriceRow = {
   _key: string
@@ -7,12 +8,26 @@ type PriceRow = {
   price?: string
 }
 
+type LinkType = {
+  _type: 'link'
+  linkType?: 'href' | 'page' | 'post' | 'contact'
+  href?: string
+  page?: {_id: string; slug?: {current?: string}}
+  post?: {_id: string; slug?: {current?: string}}
+}
+
+type CtaType = {
+  text?: string
+  link?: LinkType
+}
+
 type PriceTableProps = {
   block: {
     _type: string
     _key: string
     heading?: string
     subheading?: string
+    cta?: CtaType
     rows?: PriceRow[]
     note?: string
   }
@@ -22,7 +37,7 @@ type PriceTableProps = {
 }
 
 export default function PriceTable({block}: PriceTableProps) {
-  const {heading, subheading, rows = [], note} = block
+  const {heading, subheading, cta, rows = [], note} = block
 
   return (
     <BlockWrapper className="py-16 md:py-24">
@@ -33,7 +48,14 @@ export default function PriceTable({block}: PriceTableProps) {
               <h2 className="text-3xl md:text-4xl font-semibold dark:text-white">{heading}</h2>
             )}
             {subheading && (
-              <p className="mt-3 text-base text-black/60 dark:text-white/60">{subheading}</p>
+              <p className="mt-3 text-base text-black/60 dark:text-white/60 max-w-2xl">{subheading}</p>
+            )}
+            {cta?.text && cta?.link && (
+              <ResolvedLink link={cta.link}>
+                <button className="mt-5 px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded font-medium hover:opacity-80 transition-opacity">
+                  {cta.text}
+                </button>
+              </ResolvedLink>
             )}
           </div>
         )}

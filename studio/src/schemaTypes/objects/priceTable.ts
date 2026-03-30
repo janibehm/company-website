@@ -18,6 +18,25 @@ export const priceTable = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'cta',
+      title: 'Call to Action (optional)',
+      type: 'object',
+      description: 'Add a button with custom text that links somewhere',
+      fields: [
+        defineField({
+          name: 'text',
+          title: 'Button Text',
+          type: 'string',
+          description: 'e.g. "Get Started", "Learn More", "Contact Us"',
+        }),
+        defineField({
+          name: 'link',
+          title: 'Link',
+          type: 'link',
+        }),
+      ],
+    }),
+    defineField({
       name: 'rows',
       title: 'Price Rows',
       type: 'array',
