@@ -1,6 +1,30 @@
 [
   {
     "type": "type",
+    "name": "cta",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "text": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "link": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "link"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "type": "type",
     "name": "sanity.imageAsset.reference",
     "value": {
       "type": "object",
@@ -228,6 +252,10 @@
               {
                 "type": "string",
                 "value": "post"
+              },
+              {
+                "type": "string",
+                "value": "contact"
               }
             ]
           },
@@ -603,6 +631,14 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "cta": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "cta"
           },
           "optional": true
         },
@@ -1652,6 +1688,44 @@
                 "value": {
                   "type": "string",
                   "value": "image"
+                }
+              }
+            }
+          },
+          "optional": true
+        },
+        "svgFile": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "object",
+            "attributes": {
+              "asset": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "inline",
+                  "name": "sanity.fileAsset.reference"
+                },
+                "optional": true
+              },
+              "media": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "unknown"
+                },
+                "optional": true
+              },
+              "alt": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "file"
                 }
               }
             }

@@ -49,37 +49,37 @@ export default function ServicesSection({block}: ServicesSectionProps) {
         )}
         {!subheading && heading && <div className="mb-12 md:mb-16" />}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 w-full">
           {services?.map((service) => (
-            <div key={service._key} className="flex flex-col gap-5">
+            <div key={service._key} className="flex flex-col gap-4 h-full w-full">
               {/* Image card */}
-              {(service.image?.asset?._id || service.image?.asset?._ref) && (
-                <div
-                  className="rounded-2xl overflow-hidden aspect-[6/7] relative"
-                >
+              <div className="w-full aspect-square rounded-2xl overflow-hidden p-8">
+                {(service.image?.asset?._id || service.image?.asset?._ref) && (
                   <SanityImage
                     id={(service.image.asset._id || service.image.asset._ref)!}
                     hotspot={service.image.hotspot}
                     crop={service.image.crop}
                     alt={service.image.alt ?? service.title ?? ''}
-                    width={600}
-                    height={750}
-                    className="w-full h-full object-cover"
+                    width={300}
+                    height={300}
+                    className="w-full h-full object-contain object-center"
                   />
-                </div>
-              )}
+                )}
+              </div>
 
               {/* Text */}
-              {service.title && (
-                <h3 className="text-xl md:text-2xl font-semibold dark:text-white">
-                  {service.title}
-                </h3>
-              )}
-              {service.description && (
-                <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-                  {service.description}
-                </p>
-              )}
+              <div className="w-full pl-2 md:pl-3">
+                {service.title && (
+                  <h3 className="w-full text-left text-lg md:text-xl font-semibold dark:text-white">
+                    {service.title}
+                  </h3>
+                )}
+                {service.description && (
+                  <p className="w-full text-left text-sm leading-relaxed text-gray-600 dark:text-gray-400 flex-grow">
+                    {service.description}
+                  </p>
+                )}
+              </div>
             </div>
           ))}
         </div>

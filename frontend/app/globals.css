@@ -24,6 +24,24 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Hero wave animation */
+@keyframes wave-bobble-1 {
+  0%   { transform: translateY(-5vh); }
+  100% { transform: translateY(5vh); }
+}
+@keyframes wave-bobble-2 {
+  0%   { transform: translateY(8vh); }
+  100% { transform: translateY(-6vh); }
+}
+@keyframes wave-scroll-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100vw); }
+}
+@keyframes wave-scroll-right {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(100vw); }
+}
+
 @theme {
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 

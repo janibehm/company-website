@@ -15,6 +15,11 @@
 export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: ../sanity.schema.json
+export type Cta = {
+  text?: string
+  link?: Link
+}
+
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
@@ -56,7 +61,7 @@ export type PostReference = {
 
 export type Link = {
   _type: 'link'
-  linkType?: 'href' | 'page' | 'post'
+  linkType?: 'href' | 'page' | 'post' | 'contact'
   href?: string
   page?: PageReference
   post?: PostReference
@@ -113,6 +118,7 @@ export type PriceTable = {
   _type: 'priceTable'
   heading?: string
   subheading?: string
+  cta?: Cta
   rows?: Array<{
     product: string
     description?: string
@@ -283,6 +289,12 @@ export type AboutIntro = {
     crop?: SanityImageCrop
     alt?: string
     _type: 'image'
+  }
+  svgFile?: {
+    asset?: SanityFileAssetReference
+    media?: unknown
+    alt?: string
+    _type: 'file'
   }
 }
 
@@ -780,6 +792,7 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | Cta
   | SanityImageAssetReference
   | ServiceCardImage
   | TeamMemberImage

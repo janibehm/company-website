@@ -40,7 +40,7 @@ export default function AboutIntro({block}: AboutIntroProps) {
           )}
         </div>
 
-        <div className="aspect-[4/3] w-full bg-black/5 dark:bg-white/10 rounded-2xl overflow-hidden">
+        <div className="aspect-[4/3] w-full overflow-hidden">
           {imageId && (
             <SanityImage
               id={imageId}
