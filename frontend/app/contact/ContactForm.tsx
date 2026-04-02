@@ -13,14 +13,18 @@ export default function ContactForm() {
 
   if (state.success) {
     return (
-      <div className="rounded-lg border border-gray-200 dark:border-gray-800 p-8 text-center">
+      <div
+        role="status"
+        aria-live="polite"
+        className="rounded-lg border border-gray-200 dark:border-gray-800 p-8 text-center"
+      >
         <p className="text-lg font-medium dark:text-white">{state.message}</p>
       </div>
     )
   }
 
   return (
-    <form action={formAction} className="flex flex-col gap-6">
+    <form action={formAction} aria-busy={isPending} className="flex flex-col gap-6">
       <input
         type="text"
         name="_gotcha"
@@ -31,7 +35,9 @@ export default function ContactForm() {
       />
 
       {state.message && !state.success && (
-        <p className="text-sm text-red-500">{state.message}</p>
+        <p role="alert" aria-live="polite" className="text-sm text-red-500">
+          {state.message}
+        </p>
       )}
 
       <div className="flex flex-col gap-2">
@@ -43,10 +49,14 @@ export default function ContactForm() {
           id="name"
           name="name"
           required
+          aria-invalid={Boolean(state.errors?.name)}
+          aria-describedby={state.errors?.name ? 'name-error' : undefined}
           className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-black dark:focus:border-white dark:text-white"
         />
         {state.errors?.name && (
-          <p className="text-xs text-red-500">{state.errors.name[0]}</p>
+          <p id="name-error" className="text-xs text-red-500">
+            {state.errors.name[0]}
+          </p>
         )}
       </div>
 
@@ -59,10 +69,14 @@ export default function ContactForm() {
           id="email"
           name="email"
           required
+          aria-invalid={Boolean(state.errors?.email)}
+          aria-describedby={state.errors?.email ? 'email-error' : undefined}
           className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-black dark:focus:border-white dark:text-white"
         />
         {state.errors?.email && (
-          <p className="text-xs text-red-500">{state.errors.email[0]}</p>
+          <p id="email-error" className="text-xs text-red-500">
+            {state.errors.email[0]}
+          </p>
         )}
       </div>
 
@@ -75,10 +89,14 @@ export default function ContactForm() {
           name="message"
           rows={5}
           required
+          aria-invalid={Boolean(state.errors?.message)}
+          aria-describedby={state.errors?.message ? 'message-error' : undefined}
           className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-transparent px-4 py-3 text-sm outline-none transition-colors focus:border-black dark:focus:border-white dark:text-white resize-none"
         />
         {state.errors?.message && (
-          <p className="text-xs text-red-500">{state.errors.message[0]}</p>
+          <p id="message-error" className="text-xs text-red-500">
+            {state.errors.message[0]}
+          </p>
         )}
       </div>
 
