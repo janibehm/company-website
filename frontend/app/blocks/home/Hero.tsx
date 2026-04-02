@@ -21,6 +21,9 @@ export default function Hero({block}: HeroProps) {
       {/* Wave animation background */}
       <HeroAnimation />
 
+      {/* Bottom fade to black for smooth wave divider transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#000000] to-transparent z-[5] pointer-events-none" />
+
       <div className="relative z-10 h-full flex items-center">
         <BlockContainer className="w-full">
           <div className="md:ml-16 lg:ml-24">
