@@ -29,7 +29,7 @@ export default function ServicesHero({block}: ServicesHeroProps) {
     <BlockWrapper className="pt-16 md:pt-24 pb-0">
       <BlockContainer>
         <div className="grid grid-cols-1 gap-6 md:gap-8 items-start">
-          <div className="w-full px-2 md:px-0">
+          <div className="w-full max-w-[calc(100%-1rem)] mx-auto md:max-w-none md:px-0">
             <div className="relative w-full rounded-2xl overflow-hidden">
               {(block.image?.asset?._id || block.image?.asset?._ref) && (
                 <SanityImage
