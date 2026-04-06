@@ -16,7 +16,7 @@ export default function NavLinks() {
   return (
     <ul
       role="list"
-      className="flex items-center gap-4 md:gap-6 leading-5 text-xs sm:text-base tracking-tight font-mono"
+      className="flex items-center gap-4 md:gap-6 leading-5 text-ui-xs sm:text-base tracking-tight"
     >
       {links.map(({label, href}) => {
         const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href)

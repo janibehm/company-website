@@ -28,7 +28,7 @@ export default function Hero({block}: HeroProps) {
         <BlockContainer className="w-full">
           <div className="md:ml-16 lg:ml-24">
             {eyebrow && (
-              <p className="text-[10px] uppercase tracking-[0.25em] font-semibold mb-3 text-white/40">
+              <p className="hero-eyebrow mb-3 text-white/40">
                 {eyebrow}
               </p>
             )}
@@ -38,19 +38,19 @@ export default function Hero({block}: HeroProps) {
 
             <div className="relative mt-8 sm:mt-12 md:w-[45%] flex flex-col gap-5">
               {subheading && (
-                <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-sm text-white/80">
+                <p className="hero-small-copy max-w-sm text-white/80">
                   {subheading}
                 </p>
               )}
               {body && (body as PortableTextBlock[]).length > 0 && (
-                <div className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-sm text-white/80 [&_p]:mb-0 [&_*]:text-white/80">
+                <div className="hero-small-copy normal-case max-w-sm text-white/80 [&_p]:mb-0 [&_*]:text-white/80">
                   <PortableText value={body as PortableTextBlock[]} />
                 </div>
               )}
               {button?.buttonText && button?.link && (
                 <ResolvedLink
                   link={button.link}
-                  className="self-start rounded-full flex gap-2 font-mono text-sm whitespace-nowrap items-center py-3 px-6 transition-colors duration-200 bg-white text-black hover:bg-blue hover:text-white"
+                  className="self-start rounded-full flex gap-2 text-ui-sm whitespace-nowrap items-center py-3 px-6 transition-colors duration-200 bg-white text-black hover:bg-blue hover:text-white"
                 >
                   {button.buttonText}
                 </ResolvedLink>

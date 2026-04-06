@@ -22,6 +22,30 @@
   padding: 0 2rem;
 }
 
+@utility text-label-xs {
+  @apply text-[10px] uppercase tracking-[0.25em] leading-loose font-normal font-cutive;
+}
+
+@utility text-label-sm {
+  @apply text-[11px] uppercase tracking-[0.18em] leading-loose font-normal font-cutive;
+}
+
+@utility text-ui-xs {
+  @apply text-xs font-normal font-cutive;
+}
+
+@utility text-ui-sm {
+  @apply text-sm font-normal font-cutive;
+}
+
+@utility hero-eyebrow {
+  @apply text-label-xs;
+}
+
+@utility hero-small-copy {
+  @apply text-label-sm;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Hero wave animation */
@@ -44,6 +68,8 @@
 
 @theme {
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+
+  --font-cutive: var(--font-cutive-mono);
 
   --color-framework: #000;
   --color-black: #0b0b0b;

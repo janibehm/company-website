@@ -43,7 +43,7 @@ export default function ServicesSection({block}: ServicesSectionProps) {
           </h2>
         )}
         {subheading && (
-          <p className="text-[11px] uppercase tracking-[0.18em] leading-loose font-semibold max-w-md mt-4 mb-12 md:mb-16 text-gray-600 dark:text-white/80">
+          <p className="text-label-sm max-w-md mt-4 mb-12 md:mb-16 text-gray-600 dark:text-white/80">
             {subheading}
           </p>
         )}
@@ -70,7 +70,7 @@ export default function ServicesSection({block}: ServicesSectionProps) {
               {/* Text */}
               <div className="w-full pl-2 md:pl-3">
                 {service.title && (
-                  <h3 className="w-full text-left text-lg md:text-xl font-semibold dark:text-white">
+                  <h3 className="w-full text-left text-lg md:text-xl font-semibold underline mb-2 dark:text-white">
                     {service.title}
                   </h3>
                 )}
@@ -88,12 +88,9 @@ export default function ServicesSection({block}: ServicesSectionProps) {
         <div className="mt-12 md:mt-16">
           <Link
             href="/services"
-            className="group inline-flex items-center gap-2 text-sm uppercase tracking-widest font-semibold transition-opacity hover:opacity-70 dark:text-white"
+            className="group inline-flex items-center gap-2 text-ui-sm uppercase tracking-widest underline transition-opacity hover:opacity-70 dark:text-white"
           >
-            <span className="relative">
-              {linkText}
-              <span className="absolute left-0 bottom-[-4px] w-full h-[2px] rounded-full bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400" />
-            </span>
+            <span>{linkText}</span>
             <svg
               className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
               fill="none"

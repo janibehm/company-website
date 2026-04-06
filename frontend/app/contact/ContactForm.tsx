@@ -41,7 +41,7 @@ export default function ContactForm() {
       )}
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="name" className="text-[11px] uppercase tracking-[0.18em] font-semibold dark:text-white/80">
+        <label htmlFor="name" className="text-label-sm dark:text-white/80">
           Name
         </label>
         <input
@@ -61,7 +61,7 @@ export default function ContactForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="text-[11px] uppercase tracking-[0.18em] font-semibold dark:text-white/80">
+        <label htmlFor="email" className="text-label-sm dark:text-white/80">
           Email
         </label>
         <input
@@ -81,7 +81,7 @@ export default function ContactForm() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="message" className="text-[11px] uppercase tracking-[0.18em] font-semibold dark:text-white/80">
+        <label htmlFor="message" className="text-label-sm dark:text-white/80">
           Message
         </label>
         <textarea
@@ -103,7 +103,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="self-start rounded-full font-mono text-sm whitespace-nowrap py-3 px-8 transition-colors duration-200 bg-black dark:bg-white hover:bg-blue focus:bg-blue text-white dark:text-black dark:hover:text-white disabled:opacity-50"
+        className="self-start rounded-full text-ui-sm whitespace-nowrap py-3 px-8 transition-colors duration-200 bg-black dark:bg-white hover:bg-blue focus:bg-blue text-white dark:text-black dark:hover:text-white disabled:opacity-50"
       >
         {isPending ? 'Sending...' : 'Send message'}
       </button>
