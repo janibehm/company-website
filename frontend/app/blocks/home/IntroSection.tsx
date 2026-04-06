@@ -101,15 +101,17 @@ export default function IntroSection({block}: IntroSectionProps) {
               d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18v44h-352z"
             />
           </defs>
-          <g className="intro-parallax">
+          <g>
             <use href="#intro-gentle-wave" x="48" y="0" fill="rgba(229, 231, 235, 0.65)" />
             <use href="#intro-gentle-wave" x="48" y="3" fill="rgba(209, 213, 219, 0.56)" />
             <use href="#intro-gentle-wave" x="48" y="5" fill="rgba(156, 163, 175, 0.48)" />
-            <use href="#intro-gentle-wave" x="48" y="7" fill="rgba(107, 114, 128, 0.42)" />
+            <use href="#intro-gentle-wave" x="48" y="7" fill="rgba(71, 85, 105, 0.28)" />
           </g>
         </svg>
       </div>
       */}
+
+      <div className="w-full border-t border-black/10 dark:border-white/15" aria-hidden />
 
       <style jsx>{`
           .intro-waves {
