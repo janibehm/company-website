@@ -7,6 +7,8 @@ import Info from '@/app/blocks/home/InfoSection'
 import IntroSection from '@/app/blocks/home/IntroSection'
 import ProjectsSection from '@/app/blocks/home/ProjectsSection'
 import ProcessSection from '@/app/blocks/home/ProcessSection'
+import ProjectHero from '@/app/blocks/projects/ProjectHero'
+import ProjectOverviewSection from '@/app/blocks/projects/ProjectOverviewSection'
 import ServicesSection from '@/app/blocks/home/ServicesSection'
 import AboutFaq from '@/app/blocks/about/AboutFaq'
 import AboutIntro from '@/app/blocks/about/AboutIntro'
@@ -35,6 +37,8 @@ const Blocks = {
   hero: Hero,
   infoSection: Info,
   introSection: IntroSection,
+  projectHero: ProjectHero,
+  projectOverviewSection: ProjectOverviewSection,
   projectsSection: ProjectsSection,
   processSection: ProcessSection,
   servicesSection: ServicesSection,

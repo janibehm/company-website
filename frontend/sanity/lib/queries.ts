@@ -105,6 +105,29 @@ export const getPageQuery = defineQuery(`
           }
         }
       },
+      _type == "projectHero" => {
+        ...,
+        image{
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata { dimensions }
+          }
+        },
+        ${linkFields}
+      },
+      _type == "projectOverviewSection" => {
+        ...,
+        image{
+          ...,
+          asset->{
+            _id,
+            url,
+            metadata { dimensions }
+          }
+        }
+      },
       _type == "projectsSection" => {
         ...,
         projects[]->{

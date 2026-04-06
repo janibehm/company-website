@@ -190,6 +190,37 @@ export type ProjectsSection = {
   >
 }
 
+export type ProjectOverviewSection = {
+  _type: 'projectOverviewSection'
+  heading: string
+  subheading?: string
+  body?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
+export type ProjectHero = {
+  _type: 'projectHero'
+  title: string
+  description?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  linkText?: string
+  link?: Link
+}
+
 export type IntroSection = {
   _type: 'introSection'
   image?: {
@@ -471,6 +502,12 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & ProjectHero)
+    | ({
+        _key: string
+      } & ProjectOverviewSection)
     | ({
         _key: string
       } & ProjectsSection)
@@ -802,6 +839,8 @@ export type AllSanitySchemaTypes =
   | ProcessSection
   | ProjectReference
   | ProjectsSection
+  | ProjectOverviewSection
+  | ProjectHero
   | IntroSection
   | IllustrationSection
   | InfoSection

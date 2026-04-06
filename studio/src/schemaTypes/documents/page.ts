@@ -51,6 +51,8 @@ export const page = defineType({
         {type: 'illustrationSection'},
         {type: 'callToAction'},
         {type: 'infoSection'},
+        {type: 'projectHero'},
+        {type: 'projectOverviewSection'},
         {type: 'projectsSection'},
         {type: 'processSection'},
         {type: 'servicesSection'},

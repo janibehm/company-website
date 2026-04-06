@@ -10,6 +10,8 @@ import {hero} from './objects/hero'
 import {infoSection} from './objects/infoSection'
 import {illustrationSection} from './objects/illustrationSection'
 import {introSection} from './objects/introSection'
+import {projectHero} from './objects/projectHero'
+import {projectOverviewSection} from './objects/projectOverviewSection'
 import {projectsSection} from './objects/projectsSection'
 import {processSection} from './objects/processSection'
 import {servicesHero} from './objects/servicesHero'
@@ -44,6 +46,8 @@ export const schemaTypes = [
   infoSection,
   illustrationSection,
   introSection,
+  projectHero,
+  projectOverviewSection,
   projectsSection,
   processSection,
   servicesHero,
