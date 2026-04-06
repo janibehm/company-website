@@ -54,12 +54,11 @@ export default function ServicesSection({block}: ServicesSectionProps) {
           {services?.map((service) => (
             <div
               key={service._key}
-              className="group relative flex h-full w-full flex-col gap-5 rounded-3xl border border-black/10 bg-white/70 p-5 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.45)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_-32px_rgba(0,0,0,0.55)] dark:border-white/10 dark:bg-white/[0.04]"
+              className="group relative flex h-full w-full flex-col gap-5 rounded-none border border-black/10 p-5 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.45)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_-32px_rgba(0,0,0,0.55)] dark:border-white/10"
             >
               {/* Image card */}
               <div
-                className="w-full aspect-square rounded-2xl overflow-hidden p-8 ring-1 ring-black/5 dark:ring-white/10 bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900"
-                style={service.backgroundColor ? {backgroundColor: service.backgroundColor} : undefined}
+                className="w-full aspect-square rounded-none overflow-hidden p-8 ring-1 ring-black/5 dark:ring-white/10"
               >
                 {(service.image?.asset?._id || service.image?.asset?._ref) && (
                   <SanityImage
