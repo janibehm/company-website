@@ -37,23 +37,30 @@ export default function ServicesSection({block}: ServicesSectionProps) {
   return (
     <BlockWrapper>
       <BlockContainer>
+
         {heading && (
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold dark:text-white">
+          <h2 className="relative z-[1] text-3xl md:text-4xl lg:text-5xl font-semibold dark:text-white">
             {heading}
           </h2>
         )}
         {subheading && (
-          <p className="text-label-sm max-w-md mt-4 mb-12 md:mb-16 text-gray-600 dark:text-white/80">
+          <p className="relative z-[1] text-label-sm max-w-md mt-4 mb-12 md:mb-16 text-gray-600 dark:text-white/80">
             {subheading}
           </p>
         )}
         {!subheading && heading && <div className="mb-12 md:mb-16" />}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 w-full">
+        <div className="relative z-[1] grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 w-full">
           {services?.map((service) => (
-            <div key={service._key} className="flex flex-col gap-4 h-full w-full">
+            <div
+              key={service._key}
+              className="group relative flex h-full w-full flex-col gap-5 rounded-3xl border border-black/10 bg-white/70 p-5 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.45)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_-32px_rgba(0,0,0,0.55)] dark:border-white/10 dark:bg-white/[0.04]"
+            >
               {/* Image card */}
-              <div className="w-full aspect-square rounded-2xl overflow-hidden p-8">
+              <div
+                className="w-full aspect-square rounded-2xl overflow-hidden p-8 ring-1 ring-black/5 dark:ring-white/10 bg-gradient-to-br from-slate-100 via-white to-slate-200 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900"
+                style={service.backgroundColor ? {backgroundColor: service.backgroundColor} : undefined}
+              >
                 {(service.image?.asset?._id || service.image?.asset?._ref) && (
                   <SanityImage
                     id={(service.image.asset._id || service.image.asset._ref)!}
@@ -62,15 +69,15 @@ export default function ServicesSection({block}: ServicesSectionProps) {
                     alt={service.image.alt ?? service.title ?? ''}
                     width={300}
                     height={300}
-                    className="w-full h-full object-contain object-center"
+                    className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 )}
               </div>
 
               {/* Text */}
-              <div className="w-full pl-2 md:pl-3">
+              <div className="w-full px-1 md:px-2">
                 {service.title && (
-                  <h3 className="w-full text-left text-lg md:text-xl font-semibold underline mb-2 dark:text-white">
+                  <h3 className="w-full text-left text-lg md:text-xl font-semibold tracking-tight mb-2 dark:text-white">
                     {service.title}
                   </h3>
                 )}
@@ -85,12 +92,15 @@ export default function ServicesSection({block}: ServicesSectionProps) {
         </div>
 
         {linkText && (
-        <div className="mt-12 md:mt-16">
+        <div className="relative z-[1] mt-12 md:mt-16">
           <Link
             href="/services"
-            className="group inline-flex items-center gap-2 text-ui-sm uppercase tracking-widest underline transition-opacity hover:opacity-70 dark:text-white"
+            className="group inline-flex items-center gap-2 rounded-full border border-black/20 bg-white/75 px-5 py-3 text-ui-sm uppercase tracking-widest transition-all duration-200 hover:border-black/35 hover:bg-white dark:border-white/20 dark:bg-white/[0.04] dark:text-white dark:hover:border-white/35 dark:hover:bg-white/[0.08]"
           >
-            <span>{linkText}</span>
+            <span className="relative">
+              {linkText}
+              <span className="absolute -bottom-1 left-0 h-[1px] w-full bg-current opacity-40" />
+            </span>
             <svg
               className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
               fill="none"
