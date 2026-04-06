@@ -1,4 +1,5 @@
 import {type PortableTextBlock} from 'next-sanity'
+import Image from 'next/image'
 
 import PortableText from '@/app/components/PortableText'
 import SanityImage from '@/app/components/SanityImage'
@@ -32,16 +33,17 @@ export default function IntroSection({block}: IntroSectionProps) {
 
   return (
     <>
-      {/* Organic wave divider */}
-      {/*
-      <div className="w-full pointer-events-none">
-        <img
+      <div className="w-full pointer-events-none -mb-4 md:-mb-8">
+        <Image
           src="/images/hero_wave.svg"
           alt=""
+          width={1920}
+          height={280}
           className="block w-full h-auto"
+          priority={false}
         />
       </div>
-      */}
+
       <BlockWrapper>
         <BlockContainer>
         <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 md:gap-16 lg:gap-24 items-center">
