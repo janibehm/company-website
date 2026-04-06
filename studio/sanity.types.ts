@@ -290,12 +290,6 @@ export type AboutIntro = {
     alt?: string
     _type: 'image'
   }
-  svgFile?: {
-    asset?: SanityFileAssetReference
-    media?: unknown
-    alt?: string
-    _type: 'file'
-  }
 }
 
 export type AboutFaq = {
